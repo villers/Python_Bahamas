@@ -46,6 +46,7 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.MenuBar.addAction(self.CloseApp)
         self.ChangeNickName = QtWidgets.QAction("&Change Nickname", self)
         self.MenuBar.addAction(self.ChangeNickName)
+        self.setMenuBar(self.MenuBar)
 
     def createListRoom(self):
         self.ListRoomLabel = QtWidgets.QLabel("List Room", self.CentralWidget)
