@@ -8,11 +8,9 @@ class Server():
 
         if self.server.listen(QtNetwork.QHostAddress.Any, port):
             print("listening on port" + str(port))
+            self.server.newConnection.connect(self.onNewConnection)
         else:
             print('error')
-
-        self.server.newConnection.connect(self.onNewConnection)
-        return
 
     def onNewConnection(self):
         print("new user")

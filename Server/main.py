@@ -4,7 +4,7 @@ from Server import Server
 
 def main():
     app = QtCore.QCoreApplication(sys.argv)
-    Server(3334)
+    lol = Server(3334)
     app.exec()
     return 1
 
