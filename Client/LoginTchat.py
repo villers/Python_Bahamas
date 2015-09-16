@@ -38,12 +38,13 @@ class LoginTchat(QtWidgets.QMainWindow):
             self.ShowErrorLabel.hide()
         self.WSServer = CommunicationServer(self.AddrLineEdit.text())
         self.WSServer.ErrorConnexion.connect(self.ShowErrorConnextion)
+        self.WSServer.Login = self.LoginLineEdit.text()
         self.WSServer.Run()
         #TODO LOGIN CHECK
-        appPrincipal = TChatApplicationClient(self)
-        appPrincipal.show()
+        #appPrincipal = TChatApplicationClient(self)
+        #appPrincipal.show()
         #DELETE CONNECT on LOGIN TCHAT
-        self.hide()
+        #self.hide()
 
     def ShowErrorConnextion(self):
         if self.ShowErrorLabel == None :
