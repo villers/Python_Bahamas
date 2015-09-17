@@ -1,5 +1,7 @@
 from PyQt5 import QtWebSockets, QtCore
+
 from Model.RequestModel import RequestModel
+
 
 class CommunicationServer(QtCore.QObject):
 

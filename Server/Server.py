@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtNetwork, QtWebSockets
+from Client import Client
 
 class Server():
     def __init__(self, port):
@@ -9,26 +10,16 @@ class Server():
         if self.server.listen(QtNetwork.QHostAddress.Any, port):
             print("listening on port" + str(port))
             self.server.newConnection.connect(self.onNewConnection)
+            self.server.serverError.connect(self.OnErrorOnSocket)
         else:
             print('error')
 
     def onNewConnection(self):
-        print("new user")
-        self.connection = self.server.nextPendingConnection()
-        self.connection.textMessageReceived.connect(self.processTextMessage)
-        self.connection.disconnected.connect(self.socketDisconnected)
+        self.clients.append(Client(self.server.nextPendingConnection(), self))
 
-        self.clients.append(self.connection)
+    def removeClientOnDisconnect(self, WebSocketDisconnected):
+        #TODO OTHER TRAITEMENT
+        self.clients.remove(WebSocketDisconnected)
 
-    def processTextMessage(self,  message):
-        if (self.connection):
-            self.connection.sendTextMessage(message)
-
-    def processBinaryMessage(self,  message):
-        if (self.connection):
-            self.connection.sendBinaryMessage(message)
-
-    def socketDisconnected(self):
-        if (self.connection):
-            self.clients.remove(self.connection)
-            self.connection.deleteLater()
+    def OnErrorOnSocket(self, StatusCodeError):
+        print(StatusCodeError)
