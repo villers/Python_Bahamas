@@ -1,5 +1,6 @@
 from Model.RequestModel import RequestModel
 from Model.MessageModel import MessageModel
+
 class Client():
     def __init__(self, QWebSocketClient, ServerInstance):
 
@@ -17,13 +18,17 @@ class Client():
     def OnSocketDisconnected(self):
         self.WebSocketClient.deleteLater()
         self.ServerObject.TChatManagementInstance.Clients.remove(self)
+        self.WebSocketClient.disconnected.disconnect()
+        self.WebSocketClient.textMessageReceived.disconnect()
 
     def OnLogin(self, Message):
         if self.ServerObject.TChatManagementInstance.CheckLoginExists(Message) == False:
             self.Login = Message
-            self.WebSocketClient.sendTextMessage(MessageModel(200, "").to_JSON())
+            print("Login OK")
+            self.WebSocketClient.sendTextMessage(MessageModel(200, "", 0).to_JSON())
         else:
-            self.WebSocketClient.sendTextMessage(MessageModel(404, "Already use").to_JSON())
+            print("Login Error")
+            self.WebSocketClient.sendTextMessage(MessageModel(404, "Already use", 0).to_JSON())
 
     def SwitchRequestMethod(self, x):
         return {

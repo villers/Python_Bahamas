@@ -34,22 +34,44 @@ class LoginTchat(QtWidgets.QMainWindow):
         self.LoginButtonStart.clicked.connect(self.Handler_Click_Button_Login)
 
     def Handler_Click_Button_Login(self):
-        if self.ShowErrorLabel != None:
+        if self.ShowErrorLabel is not None:
             self.ShowErrorLabel.hide()
-        self.WSServer = CommunicationServer(self.AddrLineEdit.text())
-        self.WSServer.ErrorConnexion.connect(self.ShowErrorConnextion)
+        if self.WSServer is None:
+            self.WSServer = CommunicationServer()
+            self.WSServer.ErrorConnexion.connect(self.ShowErrorConnextion)
+            self.WSServer.ErrorLogin.connect(self.OnLoginError)
+            self.WSServer.GoodLogin.connect(self.OnLoginGood)
         self.WSServer.Login = self.LoginLineEdit.text()
-        self.WSServer.Run()
-        #TODO LOGIN CHECK
-        #appPrincipal = TChatApplicationClient(self)
-        #appPrincipal.show()
-        #DELETE CONNECT on LOGIN TCHAT
-        #self.hide()
+        if (self.WSServer.Address != self.AddrLineEdit.text()):
+            self.WSServer.closeConnexion()
+        self.WSServer.setAddress(self.AddrLineEdit.text())
+        if self.WSServer.isConnected == False:
+            self.WSServer.Run()
+        else:
+            self.WSServer.sendLoginAuthentification()
+
 
     def ShowErrorConnextion(self):
-        if self.ShowErrorLabel == None :
+        if self.ShowErrorLabel is None :
             self.ShowErrorLabel = QtWidgets.QLabel("Error Connexion", self.CentralWidget)
             self.ShowErrorLabel.setGeometry(90, 100, 150, 30)
+        self.ShowErrorLabel.setText("Error Connexion")
+        if self.ShowErrorLabel.isHidden() == True :
+            self.ShowErrorLabel.show()
+
+    def OnLoginGood(self):
+        self.WSServer.ErrorConnexion.disconnect()
+        self.WSServer.ErrorLogin.disconnect()
+        self.WSServer.GoodLogin.disconnect()
+        appPrincipal = TChatApplicationClient(self)
+        appPrincipal.show()
+        self.hide()
+
+    def OnLoginError(self):
+        if self.ShowErrorLabel is None :
+            self.ShowErrorLabel = QtWidgets.QLabel("Error Connexion", self.CentralWidget)
+            self.ShowErrorLabel.setGeometry(90, 100, 150, 30)
+        self.ShowErrorLabel.setText("Error Login")
         if self.ShowErrorLabel.isHidden() == True :
             self.ShowErrorLabel.show()
 
