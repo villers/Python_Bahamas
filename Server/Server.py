@@ -1,7 +1,11 @@
 from PyQt5 import QtCore, QtNetwork, QtWebSockets
 from Client import Client
+from TChatManagement import TChatManagement
 
 class Server():
+
+    TChatManagementInstance = TChatManagement()
+
     def __init__(self, port):
         self.clients = []
         self.connection = None
@@ -15,11 +19,7 @@ class Server():
             print('error')
 
     def onNewConnection(self):
-        self.clients.append(Client(self.server.nextPendingConnection(), self))
-
-    def removeClientOnDisconnect(self, WebSocketDisconnected):
-        #TODO OTHER TRAITEMENT
-        self.clients.remove(WebSocketDisconnected)
+        self.TChatManagementInstance.Clients.append(Client(self.server.nextPendingConnection(), self))
 
     def OnErrorOnSocket(self, StatusCodeError):
         print(StatusCodeError)
