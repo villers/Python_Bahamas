@@ -12,11 +12,15 @@ class Client():
         self.WebSocketClient.textMessageReceived.connect(self.OnProcessTextMessage)
         self.WebSocketClient.disconnected.connect(self.OnSocketDisconnected)
 
+        #tmp
+        self.ServerObject.TChatManagementInstance.Rooms.append(Room('Room1', self))
+
     def OnProcessTextMessage(self,  message):
         RequestDecoded = RequestModel.from_JSON(message)
         self.SwitchRequestMethod(RequestDecoded.request)(RequestDecoded.Message)
 
     def OnSocketDisconnected(self):
+        self.ServerObject.TChatManagementInstance.RemoveUserFromAllRoom(self)
         self.WebSocketClient.deleteLater()
         self.ServerObject.TChatManagementInstance.Clients.remove(self)
         self.WebSocketClient.disconnected.disconnect()
@@ -31,6 +35,10 @@ class Client():
             print("Login Error")
             self.WebSocketClient.sendTextMessage(MessageModel(404, "Already use", 0).to_JSON())
 
+    def OnListAvailableRoom(self, Message):
+        print("List Available Room: " + str(self.ServerObject.TChatManagementInstance.Rooms))
+        self.WebSocketClient.sendTextMessage(MessageModel(200, self.ServerObject.TChatManagementInstance.GetAllRoomName(), 0).to_JSON())
+
     def OnJoinRoom(self, Message):
         if not self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
             print("Create Room And Join Room OK")
@@ -38,15 +46,31 @@ class Client():
         else:
             print("Join Room Okey")
             self.ServerObject.TChatManagementInstance.GetRoomByName(Message).Players.append(self)
+        self.WebSocketClient.sendTextMessage(MessageModel(200, "", 0).to_JSON())
 
-    def OnListPlayerFromRoom(self, Message):
+    def OnLeaveRoom(self, Message):
         if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
-            self.ServerObject.TChatManagementInstance.GetRoomByName(Message).Players
+            print("Leave Room Okey")
+            self.ServerObject.TChatManagementInstance.GetRoomByName(Message).remove_player(self)
+            self.WebSocketClient.sendTextMessage(MessageModel(200, "", 0).to_JSON())
+        else:
+            print("Leave Room Ko")
+            self.WebSocketClient.sendTextMessage(MessageModel(404, "Does not exist", 0).to_JSON())
+
+    def OnListClientRoom(self, Message):
+        if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
+            print("List Client from "+ str(Message) +": " + str(self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName()))
+            self.WebSocketClient.sendTextMessage(MessageModel(200, self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName(), 0).to_JSON())
+        else:
+            print(str(Message) + " does not exist")
+            self.WebSocketClient.sendTextMessage(MessageModel(404, "Does not exist", 0).to_JSON())
 
 
     def SwitchRequestMethod(self, x):
         return {
             0: self.OnLogin,
-            1: self.OnJoinRoom,
-            2: self.OnListPlayerFromRoom
+            1: self.OnListAvailableRoom,
+            2: self.OnJoinRoom,
+            3: self.OnListClientRoom,
+            4: self.OnLeaveRoom
         }[x]

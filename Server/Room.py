@@ -4,9 +4,12 @@ class Room:
         self.Players = []
         self.Players.append(client)
 
-    def broadcast(self, from_player, msg):
-        for player in self.Players:
-            print(player, msg)
-
     def remove_player(self, player):
-        self.Players.remove(player)
+        if (player in self.Players):
+            self.Players.remove(player)
+
+    def GetAllPlayersName(self):
+        result = []
+        for item in self.Players:
+            result.append(item.Login)
+        return result
