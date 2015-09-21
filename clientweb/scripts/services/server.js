@@ -4,16 +4,17 @@
 'use strict';
 
 angular.module('myApp')
-    .factory('Server', function($websocket, config) {
-        var ws = $websocket(config.SIGNALIG_SERVER_URL);
+    .factory('Server', function($websocket, $rootScope) {
+        var ws = $websocket($rootScope.address);
         var collection = [];
 
         ws.onMessage(function(event) {
             console.log('message: ', event);
             var data = JSON.parse(event.data);
             switch(data.Request) {
-                case 0:
+                case 0: // login
                     console.log('Login Request', data);
+                    $rootScope.$broadcast('login', data);
                     break;
 
                 default:

@@ -25,9 +25,7 @@ angular
       .otherwise({
         redirectTo: '/home'
       });
-  });
-
-angular.module('myApp')
-  .constant('config', {
-      SIGNALIG_SERVER_URL: 'ws://localhost:3334'
+  })
+  .run(function($rootScope){
+    $rootScope.address = "ws://localhost:3334";
   });

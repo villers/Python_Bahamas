@@ -28,7 +28,7 @@ class Client():
 
     def OnLogin(self, Message):
         if not self.ServerObject.TChatManagementInstance.CheckLoginExists(Message):
-            print("Login OK")
+            print("Login OK : " + str(Message))
             self.Login = Message
             self.WebSocketClient.sendTextMessage(MessageModel(200, "", 0).to_JSON())
         else:
