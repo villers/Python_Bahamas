@@ -1,22 +1,143 @@
 body{
     margin:0;
     padding:0;
+    background:url("../img/background.jpg");
 }
 
 #login{
-	margin-top:10%!important;
-	margin:auto;
-	height:200px;
+	transition:0.5s;
+	position:relative;
+	height:300px;
 	width:30%;
-	background:red;
-	border-radius:5px;
+	margin:auto;
+	margin-top:10%!important;
+	border-radius:10px;
 	padding:10px;
+	box-shadow:
+		10px 12px 12px rgba(0,0,0,0.3),
+		inset 8px 10px 10px rgba(255,255,255,0.45);
+	background:rgba(255,255,255,0.3);
 }
 
-#login label{
-
+#login select{
+	transition:1s;
+	background:none;
+	text-align: center!important;
+	position:absolute;
+	top:20%;
+	left:10%;
+	width:80%;
+	height:35px;
+	border:2px inset black;
+	border-radius:30px;
+	color:black;
+	padding:5px;
+	text-indent: 35%;
+	outline-width:0;
 }
 
-#login input{
+#login select:hover{
+	transition:1s;
+	background:rgba(255,255,255,0.5);
+}
 
+#login input[type="text"]{
+	transition:1s;
+	background:none;
+	text-align: center!important;
+	position:absolute;
+	top:45%;
+	left:10%;
+	width:80%;
+	height:35px;
+	border:2px inset black;
+	border-radius:30px;
+	color:black;
+	padding:5px;
+	outline-width:0;
+}
+
+#login input[type="text"]:hover{
+	transition:1s;
+	background:rgba(255,255,255,0.5);
+}
+
+#login input[type="submit"]{
+	transition:1s;
+	position:absolute;
+	background:green;
+	width:80%;
+	padding:5px;
+	border-radius:30px;
+	border:none;
+	color:white;
+	font-weight:bold;
+	bottom:5%;
+	height:40px;
+	left:10%;
+	outline-width:0;
+	box-shadow:
+		5px 7px 7px rgba(0,0,0,0.3),
+		inset 4px 6px 6px rgba(255,255,255,0.45);
+}
+
+#login input[type="submit"]:hover{
+	transition:1s;
+	background:darkgreen;
+}
+
+#chat{
+	position:relative;
+	width:90%;
+	height:800px;
+	background:rgba(0,0,0,0.8);
+	border-radius:5px;
+	margin:auto;
+	margin-top:10%!important;
+}
+
+#chat #users{
+	position:absolute;
+	right:0;
+	width:10%;
+	height:100%;
+	background:rgba(0,0,0,0.4);
+	border-radius:0px 5px 5px 0px;
+}
+
+#chat #message{
+	position:absolute;
+	bottom:0;
+	left:0;
+	background:white;
+	width:75%;
+	height:5%;
+	float:left;
+	outline-width:0;
+	text-align:center;
+}
+
+#chat #send{
+	position:absolute;
+	bottom:0;
+	right:10%;
+	background:green;
+	color:white;
+	font-weight:bold;
+	width:15%;
+	height:5%;
+	border:none;
+	outline-width:0;
+}
+
+::-webkit-input-placeholder {
+   color: black;
+}
+
+::-moz-placeholder {
+   color: black;  
+}
+
+:-ms-input-placeholder {  
+   color: black;  
 }
