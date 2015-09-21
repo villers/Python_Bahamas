@@ -1,3 +1,22 @@
 body{
-    background-color: red;
+    margin:0;
+    padding:0;
+}
+
+#login{
+	margin-top:10%!important;
+	margin:auto;
+	height:200px;
+	width:30%;
+	background:red;
+	border-radius:5px;
+	padding:10px;
+}
+
+#login label{
+
+}
+
+#login input{
+
 }

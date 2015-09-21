@@ -12,7 +12,7 @@ from Server import Server
 
 
 def http_server():
-    os.chdir(os.path.dirname(os.path.realpath(__file__)) + '/../clientweb')
+    os.chdir(os.path.dirname(os.path.realpath(__file__)) + '/../clientweb') #html
     Handler = http.server.SimpleHTTPRequestHandler
     httpd = socketserver.TCPServer(("",8080), Handler)
     try:
