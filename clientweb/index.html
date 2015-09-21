@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-app="myApp">
 
-	<head>
-	    <meta charset="UTF-8">
-	    <title>Document</title>
-	    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-	    <link rel="stylesheet" href="css/style.css">
-	</head>
+    <div ng-view></div>
 
-	<body>
+    <!-- libs -->
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-websocket/angular-websocket.min.js"></script>
+    <script type="text/javascript" src="bower_components/eventEmitter/EventEmitter.min.js"></script>
 
-		<div id="login">
-			<select>
-			   <option>ws://localhost:3334</option>
-			   <option>The second option</option>
-			</select>
-			<input type="text" placeholder="login"></input>
-			<input type="submit"></input>
-		</div>
-
-		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	</body>
-
+    <!-- app -->
+    <script type="text/javascript" src="scripts/adapter.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/controllers/room.js"></script>
+    <script type="text/javascript" src="scripts/controllers/home.js"></script>
+    <script type="text/javascript" src="scripts/services/room.js"></script>
+    <script type="text/javascript" src="scripts/services/videostream.js"></script>
+    <script type="text/javascript" src="scripts/services/server.js"></script>
+    <script type="text/javascript" src="scripts/directives/videoplayer.js"></script>
+</body>
 </html>
