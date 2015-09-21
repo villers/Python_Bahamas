@@ -12,9 +12,6 @@ class Client():
         self.WebSocketClient.textMessageReceived.connect(self.OnProcessTextMessage)
         self.WebSocketClient.disconnected.connect(self.OnSocketDisconnected)
 
-        #tmp
-        self.ServerObject.TChatManagementInstance.Rooms.append(Room('Room1', self))
-
     def OnProcessTextMessage(self,  message):
         RequestDecoded = RequestModel.from_JSON(message)
         self.SwitchRequestMethod(RequestDecoded.request)(RequestDecoded.Message)
