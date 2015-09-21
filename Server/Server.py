@@ -3,9 +3,7 @@ from Client import Client
 from TChatManagement import TChatManagement
 
 class Server():
-
     TChatManagementInstance = TChatManagement()
-
     def __init__(self, port):
         self.server = QtWebSockets.QWebSocketServer("Socket1", QtWebSockets.QWebSocketServer.NonSecureMode)
 

@@ -59,7 +59,7 @@ class Client():
 
     def OnListClientRoom(self, Message):
         if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
-            #print("List Client from "+ str(Message) +": " + str(self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName()))
+            print("List Client from "+ str(Message) +": " + str(self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName()))
             self.WebSocketClient.sendTextMessage(MessageModel(200, self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName(), 3).to_JSON())
         else:
             print(str(Message) + " does not exist")
