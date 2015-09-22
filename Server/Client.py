@@ -37,14 +37,27 @@ class Client():
         print("List Available Room: " + str(self.ServerObject.TChatManagementInstance.Rooms))
         self.WebSocketClient.sendTextMessage(MessageModel(200, self.ServerObject.TChatManagementInstance.GetAllRoomName(), 1).to_JSON())
 
-    def OnJoinRoom(self, Message):
+    def OnCreateRoom(self, Message):
         if not self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
-            print("Create Room And Join Room OK")
-            self.ServerObject.TChatManagementInstance.Rooms.append(Room(Message, self))
-        elif(self.ServerObject.TChatManagementInstance.GetRoomByName(Message).PlayerExists(self) == False):
-            print("Join Room Okey")
-            self.ServerObject.TChatManagementInstance.GetRoomByName(Message).Players.append(self)
-        self.WebSocketClient.sendTextMessage(MessageModel(200, "", 2).to_JSON())
+            print("Create Room OK")
+            self.ServerObject.TChatManagementInstance.Rooms.append(Room(Message))
+            self.WebSocketClient.sendTextMessage(MessageModel(200, "", 2).to_JSON())
+        else:
+            print("Create Room Ko")
+            self.WebSocketClient.sendTextMessage(MessageModel(404, "Already exists", 2).to_JSON())
+
+    def OnJoinRoom(self, Message):
+        if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
+            if self.ServerObject.TChatManagementInstance.GetRoomByName(Message).PlayerExists(self) == False:
+                print("Join Room Okey")
+                self.ServerObject.TChatManagementInstance.GetRoomByName(Message).Players.append(self)
+                self.WebSocketClient.sendTextMessage(MessageModel(200, "", 5).to_JSON())
+            else:
+                print("Join Room Ko")
+                self.WebSocketClient.sendTextMessage(MessageModel(404, "Already exists", 5).to_JSON())
+        else:
+            print("Join Room Ko")
+            self.WebSocketClient.sendTextMessage(MessageModel(404, "Room not exists", 5).to_JSON())
 
     def OnLeaveRoom(self, Message):
         if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
@@ -68,7 +81,8 @@ class Client():
         return {
             0: self.OnLogin,
             1: self.OnListAvailableRoom,
-            2: self.OnJoinRoom,
+            2: self.OnCreateRoom,
             3: self.OnListClientRoom,
-            4: self.OnLeaveRoom
+            4: self.OnLeaveRoom,
+            5: self.OnJoinRoom
         }[x]

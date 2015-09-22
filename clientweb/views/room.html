@@ -13,7 +13,7 @@
                 <li>
                     <a ng-if="!selectRoom" ng-click="toggleSelect()">Choisir une nouvelle room</a>
                     <form class="inputSelect" ng-show="selectRoom">
-	                    <select class="form-control" ng-model="createRoomName" ng-change="doCreateRoom()">
+	                    <select class="form-control" ng-model="selectRoomName" ng-change="changeRoom()">
 							<option ng-repeat="optionsSelect in listRooms">{{optionsSelect}}</option>
 						</select>
 					</form>
@@ -35,6 +35,6 @@
 			<li ng-repeat="users in listUsers">{{users.Login}}</li>
 		</ul>
 	</div>
-	<input type="text" id="message"></input>
+	<input type="text" id="message">
 	<button id="send">Valider</button>
 </div>

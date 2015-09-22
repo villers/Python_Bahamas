@@ -1,10 +1,9 @@
 from Model.ClientModel import ClientModel
 
 class Room:
-    def __init__(self, name, client):
+    def __init__(self, name):
         self.Name = name
         self.Players = []
-        self.Players.append(client)
 
     def remove_player(self, player):
         if (player in self.Players):

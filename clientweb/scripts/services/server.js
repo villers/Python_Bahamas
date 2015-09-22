@@ -18,15 +18,18 @@ angular.module('myApp')
                 case 1: // listrooms
                     $rootScope.$broadcast('listRooms', data);
                     break;
-
                 case 2: // create a room
                     $rootScope.$broadcast('createRoom', data);
                     break;
-
-                case 3: // list of users
+                case 3: // list users from a room
                     $rootScope.$broadcast('listUsers', data);
                     break;
-
+                case 4: // leave a room
+                    $rootScope.$broadcast('leaveRoom', data);
+                    break;
+                case 5: // Join a room
+                    $rootScope.$broadcast('joinRoom', data);
+                    break;
                 default:
                     console.log('Bad Request', data);
                     break;

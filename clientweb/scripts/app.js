@@ -11,15 +11,11 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/room/:roomId', {
+      .when('/room/:roomName', {
         templateUrl: 'views/room.html',
         controller: 'RoomCtrl'
       })
       .when('/room', {
-        templateUrl: 'views/room.html',
-        controller: 'RoomCtrl'
-      })
-      .when('/listRoom', {
         templateUrl: 'views/listRoom.html',
         controller: 'ListRoomCtrl'
       })
