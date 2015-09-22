@@ -1,10 +1,10 @@
 /**
- * Created by viller_m on 21/09/2015.
+ * Created by viller_m and sioly_t on 21/09/2015.
  */
 'use strict';
 
 angular.module('myApp')
-  .controller('RoomCtrl', function (Server, $scope, $rootScope) {
+  .controller('RoomCtrl', function ($location, Server, $scope, $rootScope) {
     Server.send({ "request": 1, "Message": ""});
 
     // Récupération de la liste des rooms
@@ -14,8 +14,9 @@ angular.module('myApp')
 
     // Création d'une nouvelle room
     $scope.$on('createRoom', function(events,args){
-      console.log("createroom", args)
-      //$scope.createRoom = args.Message;
+      if (args.Status === 200) {
+        $location.path('room/'+$scope.createRoomName);
+      }
     });
    
     $scope.toggleSelect = function(){
@@ -25,5 +26,11 @@ angular.module('myApp')
     $scope.toggleCreate = function(){
       $scope.createRoom = (!$scope.createRoom)? true : false;
     }
+
+    // Demande de création d'une nouvelle room
+      $scope.doCreateRoom = function(){
+        Server.send({ "request": 2, "Message": $scope.createRoomName });
+        console.log($scope.createRoomName);
+      }
 
   });

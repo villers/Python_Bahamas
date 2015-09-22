@@ -18,8 +18,10 @@
                 </li>
                 <li>
                     <a ng-if="!createRoom" ng-click="toggleCreate()">Créer une room</a>
-                    <input ng-if="createRoom" ng-model="createRoom" type="text"/>
-                </li>
+                    <form ng-show="createRoom" ng-submit="doCreateRoom()">
+	                    <input ng-model="createRoomName" type="text"/>
+	                    <input type="submit"/>
+                    </form>
                 </li>
             </ul>
         </div>
