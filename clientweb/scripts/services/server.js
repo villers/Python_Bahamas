@@ -23,6 +23,10 @@ angular.module('myApp')
                     $rootScope.$broadcast('createRoom', data);
                     break;
 
+                case 3: // list of users
+                    $rootScope.$broadcast('listUsers', data);
+                    break;
+
                 default:
                     console.log('Bad Request', data);
                     break;

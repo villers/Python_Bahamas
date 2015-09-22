@@ -132,3 +132,17 @@ body{
 .choose_room{
 	display:none;
 }
+
+.test{
+	margin-top:15px;
+}
+
+a{
+	width:300px;
+	text-align:center;
+}
+
+.test{
+	width:300px;
+	text-align:center;
+}
