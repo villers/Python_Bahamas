@@ -8,7 +8,6 @@ angular.module('myApp')
 
         // Récupération du login
         $scope.$on('login', function(events,args){
-        	console.log(args);
         	if (args.Status === 200) {
 				$location.path('/listRoom');
         	} else {
