@@ -5,7 +5,6 @@
 
 angular.module('myApp')
   .controller('RoomCtrl', function ($location, Server, $scope, $rootScope) {
-    Server.send({ "request": 0, "Message": ""});
     Server.send({ "request": 1, "Message": ""});
 
     // Récupération de la liste des rooms
@@ -15,6 +14,7 @@ angular.module('myApp')
 
     // Récupération de la liste des users
     $scope.$on('listUsers', function(events,args){
+      console.log(args.Message);
       $scope.listUsers = args.Message;
     });
 
@@ -22,30 +22,26 @@ angular.module('myApp')
     $scope.$on('createRoom', function(events,args){
       if (args.Status === 200) {
         $location.path('room/'+$scope.createRoomName);
+        $scope.doListUsers();
       }
     });
-   
-    $scope.toggleSelect = function(){
-      $scope.selectRoom = (!$scope.selectRoom)? true : false;
-    }
-
-    $scope.toggleCreate = function(){
-      $scope.createRoom = (!$scope.createRoom)? true : false;
-    }
 
     // Demande de création d'une nouvelle room
-      $scope.doCreateRoom = function(){
-        Server.send({ "request": 2, "Message": $scope.createRoomName });
-      }
-
-      // Demande de création d'une nouvelle room
-      $scope.doSelectRoom = function(){
-        Server.send({ "request": 2, "Message": $scope.createRoomName });
-      }
+    $scope.doCreateRoom = function(){
+      $rootScope.createRoomName = $scope.createRoomName;
+      Server.send({ "request": 2, "Message": $scope.createRoomName });
+    };
 
     // Demande de récupération de la liste des users
-      $scope.doListUsers = function(){
-        Server.send({ "request": 3, "Message": $scope.createRoomName });
-      }
+    $scope.doListUsers = function(){
+      Server.send({ "request": 3, "Message": $rootScope.createRoomName });
+    };
+
+    $scope.toggleSelect = function(){
+      $scope.selectRoom = (!$scope.selectRoom);
+    };
+    $scope.toggleCreate = function(){
+      $scope.createRoom = (!$scope.createRoom);
+    };
 
   });

@@ -12,18 +12,16 @@
             <ul class="nav navbar-nav">
                 <li>
                     <a ng-if="!selectRoom" ng-click="toggleSelect()">Choisir une nouvelle room</a>
-                    <form ng-show="selectRoom" ng-submit="doCreateRoom()">
-	                    <select ng-model="createRoomName" class="test">
+                    <form class="inputSelect" ng-show="selectRoom">
+	                    <select class="form-control" ng-model="createRoomName" ng-change="doCreateRoom()">
 							<option ng-repeat="optionsSelect in listRooms">{{optionsSelect}}</option>
-							<input type="submit"/>
 						</select>
 					</form>
                 </li>
                 <li>
                     <a ng-if="!createRoom" ng-click="toggleCreate()">Créer une room</a>
-                    <form ng-show="createRoom" ng-submit="doCreateRoom()" class="test">
-	                    <input ng-model="createRoomName" type="text"/>
-	                    <input type="submit"/>
+                    <form class="inputSelect" ng-show="createRoom" ng-submit="doCreateRoom()">
+	                    <input class="form-control" ng-model="createRoomName" type="text"/>
                     </form>
                 </li>
             </ul>
@@ -34,7 +32,7 @@
 <div id="chat">
 	<div id="users">
 		<ul>
-			<li ng-repeat="users in listUsers">{{users}}</li>
+			<li ng-repeat="users in listUsers">{{users.Login}}</li>
 		</ul>
 	</div>
 	<input type="text" id="message"></input>

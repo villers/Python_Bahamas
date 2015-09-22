@@ -12,6 +12,8 @@ h3 {
 	margin-top: 100px;
 }
 
+/* LOGIN */
+
 #login{
 	transition:0.5s;
 	position:relative;
@@ -81,6 +83,8 @@ h3 {
 	font-size:18px;
 }
 
+/* TCHAT */
+
 #chat{
 	position:relative;
 	width:90%;
@@ -125,6 +129,33 @@ h3 {
 	outline-width:0;
 }
 
+/* NAVBAR */
+
+.navbar-collapse a{
+	width:300px;
+	text-align:center;
+}
+
+.navbar-collapse .inputSelect{
+	width:300px;
+	text-align:center;
+	padding-top:8px;
+}
+
+.navbar-collapse .inputSelect select{
+	width:70%;
+	display:block;
+	margin:auto;
+}
+
+.navbar-collapse .inputSelect input{
+	width:70%;
+	display:block;
+	margin:auto;
+}
+
+/* PLACEHOLDER */
+
 ::-webkit-input-placeholder {
    color: black;
 }
@@ -135,22 +166,4 @@ h3 {
 
 :-ms-input-placeholder {  
    color: black;  
-}
-
-.choose_room{
-	display:none;
-}
-
-.test{
-	margin-top:15px;
-}
-
-a{
-	width:300px;
-	text-align:center;
-}
-
-.test{
-	width:300px;
-	text-align:center;
 }

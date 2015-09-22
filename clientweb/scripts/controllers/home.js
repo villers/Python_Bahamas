@@ -5,11 +5,11 @@
 
 angular.module('myApp')
     .controller('HomeCtrl', function ($location, $rootScope, $scope, Server) {
-
+    	
         // Récupération du login
         $scope.$on('login', function(events,args){
         	if (args.Status === 200) {
-				$location.path('/listRoom');
+				$location.path('/room');
         	} else {
                 delete $rootScope.login;
         		$scope.error = args.Message;
