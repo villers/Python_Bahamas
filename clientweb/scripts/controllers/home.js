@@ -10,8 +10,9 @@ angular.module('myApp')
         $scope.$on('login', function(events,args){
         	console.log(args);
         	if (args.Status === 200) {
-        		 $location.path('/room');
+				$location.path('/listRoom');
         	} else {
+                delete $rootScope.login;
         		$scope.error = args.Message;
         	}
         });
@@ -19,7 +20,6 @@ angular.module('myApp')
         // Demande de connexion
         $scope.doConnexion = function(){
         	$rootScope.login = $scope.login;
-        	$rootScope.address = $scope.address;
         	Server.send({ "request": 0, "Message": $scope.login });
         }
     });

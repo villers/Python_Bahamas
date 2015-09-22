@@ -6,7 +6,8 @@
 angular
   .module('myApp', [
     'ngRoute',
-    'ngWebSocket'
+    'ngWebSocket',
+    'ngStorage'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -18,6 +19,10 @@ angular
         templateUrl: 'views/room.html',
         controller: 'RoomCtrl'
       })
+      .when('/listRoom', {
+        templateUrl: 'views/listRoom.html',
+        controller: 'ListRoomCtrl'
+      })
       .when('/home', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
@@ -28,4 +33,9 @@ angular
   })
   .constant('config', {
       SIGNALIG_SERVER_URL: 'ws://localhost:3334'
+  })
+  .run(function($rootScope, $location){
+      if (!$rootScope.login) {
+        $location.path('/home');
+      }
   });

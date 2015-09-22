@@ -11,6 +11,7 @@ class Client():
         self.ServerObject = ServerInstance
         self.WebSocketClient.textMessageReceived.connect(self.OnProcessTextMessage)
         self.WebSocketClient.disconnected.connect(self.OnSocketDisconnected)
+        print("new socket")
 
     def OnProcessTextMessage(self,  message):
         RequestDecoded = RequestModel.from_JSON(message)
