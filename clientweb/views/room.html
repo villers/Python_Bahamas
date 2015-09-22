@@ -11,19 +11,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#one">1</a>
+                    <a ng-if="!selectRoom" ng-click="toggleSelect()">Choisir une nouvelle room</a>
+                    <select ng-if="selectRoom" ng-model="room">
+						<option ng-repeat="optionsSelect in listRooms">{{optionsSelect}}</option>
+					</select>
                 </li>
                 <li>
-                    <a href="#two">2</a>
+                    <a ng-if="!createRoom" ng-click="toggleCreate()">Créer une room</a>
+                    <input ng-if="createRoom" ng-model="createRoom" type="text"/>
                 </li>
-                <li>
-                    <a href="#three">3</a>
-                </li>
-                <li>
-                    <a href="#four">4</a>
-                </li>
-                <li>
-                    <a href="#five">5</a>
                 </li>
             </ul>
         </div>

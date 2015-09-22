@@ -4,47 +4,26 @@
 'use strict';
 
 angular.module('myApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room) {
+  .controller('RoomCtrl', function (Server, $scope, $rootScope) {
+    Server.send({ "request": 1, "Message": ""});
 
-    if (!window.RTCPeerConnection || !navigator.getUserMedia) {
-      $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
-      return;
+    // Récupération de la liste des rooms
+    $scope.$on('listRooms', function(events,args){
+      $scope.listRooms = args.Message;
+    });
+
+    // Création d'une nouvelle room
+    $scope.$on('createRoom', function(events,args){
+      console.log("createroom", args)
+      //$scope.createRoom = args.Message;
+    });
+   
+    $scope.toggleSelect = function(){
+      $scope.selectRoom = (!$scope.selectRoom)? true : false;
     }
 
-    var stream;
+    $scope.toggleCreate = function(){
+      $scope.createRoom = (!$scope.createRoom)? true : false;
+    }
 
-    VideoStream.get()
-    .then(function (s) {
-      stream = s;
-      Room.init(stream);
-      stream = URL.createObjectURL(stream);
-      if (!$routeParams.roomId) {
-        Room.createRoom()
-        .then(function (roomId) {
-          $location.path('/room/' + roomId);
-        });
-      } else {
-        Room.joinRoom($routeParams.roomId);
-      }
-    }, function () {
-      $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
-    });
-    $scope.peers = [];
-    Room.on('peer.stream', function (peer) {
-      console.log('Client connected, adding new stream');
-      $scope.peers.push({
-        id: peer.id,
-        stream: URL.createObjectURL(peer.stream)
-      });
-    });
-    Room.on('peer.disconnected', function (peer) {
-      console.log('Client disconnected, removing stream');
-      $scope.peers = $scope.peers.filter(function (p) {
-        return p.id !== peer.id;
-      });
-    });
-
-    $scope.getLocalVideo = function () {
-      return $sce.trustAsResourceUrl(stream);
-    };
   });

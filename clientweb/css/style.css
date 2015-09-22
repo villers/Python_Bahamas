@@ -86,6 +86,10 @@ body{
 	background:darkgreen;
 }
 
+#login .error{
+	color:red;
+}
+
 #chat{
 	position:relative;
 	width:90%;
@@ -93,7 +97,7 @@ body{
 	background:rgba(0,0,0,0.8);
 	border-radius:5px;
 	margin:auto;
-	margin-top:10%!important;
+	margin-top:6%!important;
 }
 
 #chat #users{
@@ -140,4 +144,8 @@ body{
 
 :-ms-input-placeholder {  
    color: black;  
+}
+
+.choose_room{
+	display:none;
 }

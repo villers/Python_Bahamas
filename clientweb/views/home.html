@@ -1,10 +1,7 @@
 <div id="login">
 	<form name="connexion" ng-submit="doConnexion()">
-		<select ng-model="address">
-		   <option>ws://localhost:3334</option>
-		   <option>The second option</option>
-		</select>
-		<input type="text" placeholder="login" ng-model="login"></input>
-		<input type="submit"></input>
+		<input type="text" placeholder="login" ng-model="login"/>
+		<span class="error" ng-if="error">{{error}}</span>
+		<input type="submit"/>
 	</form>
 </div>

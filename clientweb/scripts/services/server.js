@@ -13,8 +13,14 @@ angular.module('myApp')
             var data = JSON.parse(event.data);
             switch(data.Request) {
                 case 0: // login
-                    console.log('Login Request', data);
                     $rootScope.$broadcast('login', data);
+                    break;
+                case 1: // listrooms
+                    $rootScope.$broadcast('listRooms', data);
+                    break;
+
+                case 2: // create a room
+                    $rootScope.$broadcast('createRoom', data);
                     break;
 
                 default:
