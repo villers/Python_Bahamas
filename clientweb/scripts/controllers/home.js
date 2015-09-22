@@ -10,7 +10,11 @@ angular.module('myApp')
         // Réception des événements
         $scope.$on('login', function(events,args){
         	console.log(args);
-        	$scope.login = args;
+        	if (args.Status === 200) {
+        		 $location.path('/room');
+        	} else {
+        		$scope.error = args.Message;
+        	}
         });
 
         // Demande de connexion

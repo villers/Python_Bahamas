@@ -13,7 +13,6 @@ angular.module('myApp')
             var data = JSON.parse(event.data);
             switch(data.Request) {
                 case 0: // login
-                    console.log('Login Request', data);
                     $rootScope.$broadcast('login', data);
                     break;
 
