@@ -4,8 +4,8 @@
 'use strict';
 
 angular.module('myApp')
-    .factory('Server', function($websocket, $rootScope) {
-        var ws = $websocket($rootScope.address);
+    .factory('Server', function($websocket, $rootScope, config) {
+        var ws = $websocket(config.SIGNALIG_SERVER_URL);
         var collection = [];
 
         ws.onMessage(function(event) {

@@ -16,6 +16,7 @@ def http_server():
     Handler = http.server.SimpleHTTPRequestHandler
     httpd = socketserver.TCPServer(("",8080), Handler)
     try:
+        print("listening on http://localhost:8080")
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass

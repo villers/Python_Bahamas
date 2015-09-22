@@ -26,6 +26,6 @@ angular
         redirectTo: '/home'
       });
   })
-  .run(function($rootScope){
-    $rootScope.address = "ws://localhost:3334";
+  .constant('config', {
+      SIGNALIG_SERVER_URL: 'ws://localhost:3334'
   });
