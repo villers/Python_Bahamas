@@ -28,7 +28,7 @@ angular
       });
   })
   .constant('config', {
-      WEBSOCKETURL: 'ws://10.12.181.128:3334'
+      WEBSOCKETURL: 'ws://localhost:3334'
   })
   .run(function($rootScope, $location){
       if (!$rootScope.login) {

@@ -15,6 +15,7 @@ angular.module('myApp')
         // Récupération de la liste des users
         $scope.$on('listUsers', function(events,args){
             $scope.listUsers = args.Message;
+            console.log(args.Message);
         });
 
         // Création d'une nouvelle room
@@ -62,8 +63,17 @@ angular.module('myApp')
             $location.path('room/'+$scope.selectRoomName);
         };
 
-        $scope.test = function(event) {
-            console.log($(event.target).css('width','100px'));
+        $scope.ctrlCamera = function(event) {
+            //console.log($(event.target).css('width','75%'));
+            if($(event.target).hasClass("visibleTrue")){
+                $(event.target).removeClass('visibleTrue');
+                $(event.target).addClass('visibleFalse');
+                $('.visibleTrue').hide();
+            }else if($(event.target).hasClass("visibleFalse")){
+                $(event.target).removeClass('visibleFalse');
+                $(event.target).addClass('visibleTrue');
+                $('.visibleTrue').show();
+            }
         };
 
         $scope.closeCamera = function(event) {

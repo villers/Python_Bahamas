@@ -98,18 +98,22 @@ h3 {
 	border-bottom:1px solid silver;
 }
 
-.chat_audio .ctrlCamera{
-	width:100%;
+.chat_audio .visibleFalse{
+	width:80%;
+	margin:auto;
+	display:block;
 }
 
 .video-wrapper{
 	width:98%;
+	min-height:70px;
 	margin:auto;
 	display:block;
 }
 
 video{
-	width:24.7%;
+	width:24.5%;
+	margin-left:0.5%;
 	height:100%;
 }
 
@@ -141,7 +145,6 @@ video{
 #chat #users ul{
 	text-align:center;
 	padding:10px;
-	border-bottom:1px solid silver;
 }
 
 #chat #users li{
