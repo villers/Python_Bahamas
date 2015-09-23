@@ -1,5 +1,5 @@
 from Model.RequestModel import RequestModel
-from Model.MessageModel import MessageModel
+from Model.MessageModel import *
 from Room import Room
 
 class Client():
@@ -71,7 +71,9 @@ class Client():
     def OnListClientRoom(self, Message):
         if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
             print("List Client from "+ str(Message) +": " + str(self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName()))
-            self.WebSocketClient.sendTextMessage(MessageModel(200, self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName(), 3).to_JSON())
+            #self.WebSocketClient.sendTextMessage(MessageModel(200, self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName(), 3).to_JSON())
+            msgToSend = MessageModel(200, RoomClientModel(Message, self.ServerObject.TChatManagementInstance.GetRoomByName(Message).GetAllPlayersName()), 3).to_JSON()
+            self.WebSocketClient.sendTextMessage(msgToSend)
         else:
             print(str(Message) + " does not exist")
             self.WebSocketClient.sendTextMessage(MessageModel(404, "Does not exist", 3).to_JSON())

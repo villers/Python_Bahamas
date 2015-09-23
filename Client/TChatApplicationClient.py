@@ -95,6 +95,7 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.LoginTchatObject.WSServer.sendRequestRooms()
         self.LoginTchatObject.WSServer.OnCreationRoomSuccess.connect(self.OnUpdateCreationOfRoomwithSuccess)
         self.LoginTchatObject.WSServer.OnJoinRoomSuccess.connect(self.onJoinRoomSuccessViewUpdate)
+        self.LoginTchatObject.WSServer.OnUpdateListInRoom.connect(self.OnUpdateListClientInRoom)
 
     def onUpdateListRooms(self, listRoom):
         self.ListRoom.clear()
@@ -109,4 +110,8 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
 
     def onJoinRoomSuccessViewUpdate(self, NameOfRoom):
         self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), NameOfRoom)
+        self.LoginTchatObject.WSServer.sendRequestListInRoom(NameOfRoom)
+
+    def OnUpdateListClientInRoom(self, JSONListClient):
+        print("loool")
 

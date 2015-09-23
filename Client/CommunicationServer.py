@@ -1,7 +1,7 @@
 from PyQt5 import QtWebSockets, QtCore
 
 from Model.RequestModel import RequestModel
-from Model.MessageModel import MessageModel
+from Model.MessageModel import *
 
 
 class CommunicationServer(QtCore.QObject):
@@ -19,6 +19,8 @@ class CommunicationServer(QtCore.QObject):
     OnCreationRoomSuccess = QtCore.pyqtSignal()
 
     OnJoinRoomSuccess = QtCore.pyqtSignal([str])
+
+    OnUpdateListInRoom = QtCore.pyqtSignal([RoomClientModel])
 
     Login = ""
 
@@ -86,12 +88,19 @@ class CommunicationServer(QtCore.QObject):
         if Status == 200:
             self.OnJoinRoomSuccess.emit(Message)
 
+    def sendRequestListInRoom(self, nameOfRoom):
+        self.WebSockets.sendTextMessage(RequestModel(3, nameOfRoom).to_JSON())
+
+    def onHandlerListInRoom(self, Status, Message):
+        if Status == 200:
+            self.OnUpdateListInRoom.emit(Message)
 
     def SwitchRequestMethod(self, x):
         return {
             0: self.RecvCheckLogin,
             1: self.onHandlerListOfRooms,
             2: self.onHandlerCreationRoom,
+            3: self.onHandlerListInRoom,
             5: self.onHandlerJoinRoom
         }[x]
 

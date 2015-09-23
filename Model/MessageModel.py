@@ -1,7 +1,11 @@
 import json
 
 def object_decoder(obj):
-    return MessageModel(obj['Status'], obj['Message'], obj['Request'])
+    if 'Status' in obj.keys():
+        return MessageModel(obj['Status'], obj['Message'], obj['Request'])
+    if 'Ip' in obj.keys():
+        return IpClientModel(obj["Ip"], obj["Login"])
+    return RoomClientModel(obj["Room"], obj["Clients"])
 
 class MessageModel():
     Status = 0
@@ -20,3 +24,20 @@ class MessageModel():
     @staticmethod
     def from_JSON(data):
         return json.loads(data, object_hook=object_decoder)
+
+
+class IpClientModel():
+    Ip = 0
+    Login = ""
+
+    def __init__(self, ip, Login):
+        self.Ip = ip
+        self.Login = Login
+
+class RoomClientModel():
+    Room = ""
+    Clients = []
+
+    def __init__(self, room, clients):
+        self.Room = room
+        self.Clients = clients
