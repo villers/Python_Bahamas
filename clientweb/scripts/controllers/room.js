@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce) {
+    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, Room, $sce) {
         // Récupération de la liste des rooms
         $scope.$on('listRooms', function(events,args){
             $scope.listRooms = args.Message;
