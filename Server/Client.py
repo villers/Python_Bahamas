@@ -51,7 +51,7 @@ class Client():
             if self.ServerObject.TChatManagementInstance.GetRoomByName(Message).PlayerExists(self) == False:
                 print("Join Room Okey")
                 self.ServerObject.TChatManagementInstance.GetRoomByName(Message).Players.append(self)
-                self.WebSocketClient.sendTextMessage(MessageModel(200, "", 5).to_JSON())
+                self.WebSocketClient.sendTextMessage(MessageModel(200, Message, 5).to_JSON())
             else:
                 print("Join Room Ko")
                 self.WebSocketClient.sendTextMessage(MessageModel(404, "Already exists", 5).to_JSON())

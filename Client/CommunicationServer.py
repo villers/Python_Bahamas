@@ -14,6 +14,8 @@ class CommunicationServer(QtCore.QObject):
 
     isConnected = False
 
+    OnGetAllRoom = QtCore.pyqtSignal([list])
+
     Login = ""
 
     def __init__(self):
@@ -60,9 +62,16 @@ class CommunicationServer(QtCore.QObject):
         LoginModel = RequestModel(0, self.Login)
         self.WebSockets.sendTextMessage(LoginModel.to_JSON())
 
+    def onHandlerListOfRooms(self, Status, Message):
+        self.OnGetAllRoom.emit(Message)
+
+    def sendRequestRooms(self):
+        self.WebSockets.sendTextMessage(RequestModel(1, "").to_JSON())
+
     def SwitchRequestMethod(self, x):
         return {
-            0: self.RecvCheckLogin
+            0: self.RecvCheckLogin,
+            1: self.onHandlerListOfRooms
         }[x]
 
     def RecvCheckLogin(self, Status, Message):

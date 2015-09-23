@@ -20,6 +20,7 @@ except AttributeError:
 class TChatApplicationClient(QtWidgets.QMainWindow):
     def __init__(self, parent = None):
         super(TChatApplicationClient, self).__init__(parent)
+        self.LoginTchatObject = parent
         self.CameraConfigObject = CameraConfig()
         self.AudioInputConfig = AudioInputConfig()
         self.AudioOutputConfig = AudioOutputConfig()
@@ -32,6 +33,7 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.SetDataList()
         self.createTabWidgetRoom()
         self.GetCameraForShow()
+        self.setSignalCommunicationServer()
 
     def createWindow(self):
         self.setWindowTitle("Bahamas Tchat")
@@ -51,9 +53,10 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
     def createListRoom(self):
         self.ListRoomLabel = QtWidgets.QLabel("List Room", self.CentralWidget)
         self.ListRoomLabel.setGeometry(QtCore.QRect(650, 20, 251, 22))
-        self.ListRoom = QtWidgets.QListView(self.CentralWidget)
+        self.ListRoom = QtWidgets.QListWidget(self.CentralWidget)
         self.ListRoom.setGeometry(QtCore.QRect(590, 40, 211, 561))
         self.ListRoom.setObjectName(_fromUtf8("ListRoom"))
+        self.ListRoom.itemDoubleClicked.connect(self.onClickDBLItemListRoom)
 
     def createCameraList(self):
         self.ComboBoxCameraListLabel = QtWidgets.QLabel("Choose Your Camera", self.CentralWidget)
@@ -89,6 +92,17 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.TabWidgetRoom = QtWidgets.QTabWidget(self.CentralWidget)
         self.TabWidgetRoom.setGeometry(QtCore.QRect(0, 150, 589, 450))
         self.DefaultWidgetsRoom = QtWidgets.QWidget(self.TabWidgetRoom)
-        self.TabWidgetRoom.addTab(self.DefaultWidgetsRoom, "Room 1")
-        self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), "Room 2")
-        self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), "Room 3")
+        #self.TabWidgetRoom.addTab(self.DefaultWidgetsRoom, "Room 1")
+        #self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), "Room 2")
+        #self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), "Room 3")
+
+
+    def setSignalCommunicationServer(self):
+        self.LoginTchatObject.WSServer.OnGetAllRoom.connect(self.onUpdateListRooms)
+        self.LoginTchatObject.WSServer.sendRequestRooms()
+
+    def onUpdateListRooms(self, listRoom):
+        self.ListRoom.addItems(listRoom)
+
+    def onClickDBLItemListRoom(self, itemClicked):
+        roomSelected = itemClicked.text()
