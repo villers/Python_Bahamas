@@ -7,7 +7,8 @@ angular
   .module('myApp', [
     'ngRoute',
     'ngWebSocket',
-    'ngStorage'
+    'ngStorage',
+    'ngAnimate'
   ])
   .config(function ($routeProvider) {
     $routeProvider
