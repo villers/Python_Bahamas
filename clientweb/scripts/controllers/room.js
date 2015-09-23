@@ -101,7 +101,7 @@ angular.module('myApp')
             video = $(video);
 
             var item = {
-                src: video.attr('src'),
+                src: $sce.trustAsResourceUrl(video.attr('src')),
                 id: video.attr('id')
             };
             $scope.peers.push(item);

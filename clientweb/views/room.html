@@ -33,11 +33,11 @@
 <!-- VIDEO -->
 <div class="chat_audio">
     <div class="video-wrapper" ng-init="item = []">
-        <video ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="item[$index] = !item[$index]" ng-src="{{stream}}" autoplay></video>
-        <video id="localVideo" style="width:6%;position:absolute;right:1%;bottom:2%;height:auto;box-shadow:-3px -3px 3px;" ng-src="{{stream}}" autoplay muted></video>
+        <video ng-repeat="peer in peers" ng-src="{{peer.src}}" id="{{peer.id}}" ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="item[$index] = !item[$index]" autoplay></video>
+        <video id="localVideo" style="width:6%;position:absolute;right:1%;bottom:2%;height:auto;box-shadow:-3px -3px 3px;" autoplay muted></video>
     </div>
 </div>
-<div id="remotes">{{peers}}</div>
+
 <!-- TEXT -->
 <div id="chat">
 	<div id="users">
