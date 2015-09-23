@@ -20,6 +20,7 @@ except AttributeError:
 class TChatApplicationClient(QtWidgets.QMainWindow):
     def __init__(self, parent = None):
         super(TChatApplicationClient, self).__init__(parent)
+        self.QWidgetRoomList = []
         self.DialogWindowCreateRoom = None
         self.LoginTchatObject = parent
         self.CameraConfigObject = CameraConfig()
@@ -109,9 +110,17 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.LoginTchatObject.WSServer.sendRequestRooms()
 
     def onJoinRoomSuccessViewUpdate(self, NameOfRoom):
-        self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), NameOfRoom)
+        newWidgetTab = QtWidgets.QWidget(self.TabWidgetRoom)
+        ListWidget = QtWidgets.QListWidget(newWidgetTab)
+        ListWidget.setGeometry(QtCore.QRect(190, 130, 191, 241))
+        self.QWidgetRoomList.append({"Room": NameOfRoom, "Widget": newWidgetTab, "ListWidget": ListWidget})
+        self.TabWidgetRoom.addTab(newWidgetTab, NameOfRoom)
         self.LoginTchatObject.WSServer.sendRequestListInRoom(NameOfRoom)
 
     def OnUpdateListClientInRoom(self, JSONListClient):
-        print("loool")
+        for item in self.QWidgetRoomList:
+            if item["Room"] == JSONListClient.Room:
+                for itemClient in JSONListClient.Clients:
+                    item["ListWidget"].addItem(itemClient.Login)
+            break
 
