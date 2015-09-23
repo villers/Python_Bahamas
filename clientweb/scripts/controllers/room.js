@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, Room, $sce) {
+    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce) {
         // Récupération de la liste des rooms
         $scope.$on('listRooms', function(events,args){
             $scope.listRooms = args.Message;
@@ -58,6 +58,14 @@ angular.module('myApp')
 
         $scope.changeRoom = function() {
             $location.path('room/'+$scope.selectRoomName);
+        };
+
+        $scope.test = function(event) {
+            console.log($(event.target).css('width','100px'));
+        };
+
+        $scope.closeCamera = function(event) {
+            console.log($(event.target).css('display','none'));
         };
 
         $scope.refreshList();

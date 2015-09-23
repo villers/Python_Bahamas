@@ -98,8 +98,11 @@ h3 {
 	border-bottom:1px solid silver;
 }
 
+.chat_audio .ctrlCamera{
+	width:100%;
+}
+
 .video-wrapper{
-	background:red;
 	width:98%;
 	margin:auto;
 	display:block;
