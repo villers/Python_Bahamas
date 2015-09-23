@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams) {
+    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce) {
         // Récupération de la liste des rooms
         $scope.$on('listRooms', function(events,args){
             $scope.listRooms = args.Message;
@@ -62,4 +62,26 @@ angular.module('myApp')
 
         $scope.refreshList();
         $scope.doJoinRoom();
+
+        if (!window.RTCPeerConnection || !navigator.getUserMedia) {
+            alert('WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.');
+            return false;
+        }
+
+        var stream;
+        VideoStream.get().then(function (stream) {
+            //Room.init(stream);
+            stream = URL.createObjectURL(stream);
+            $scope.stream = $sce.trustAsResourceUrl(stream);
+
+            /*if (!$routeParams.roomId) {
+                Room.createRoom().then(function (roomId) {
+                    $location.path('/room/' + roomId);
+                });
+            } else {
+                Room.joinRoom($routeParams.roomId);
+            }*/
+        }, function () {
+            alert('No audio/video permissions. Please refresh your browser and allow the audio/video capturing.');
+        });
     });

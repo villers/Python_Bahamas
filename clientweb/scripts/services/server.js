@@ -5,7 +5,7 @@
 
 angular.module('myApp')
     .factory('Server', function($websocket, $rootScope, config) {
-        var ws = $websocket(config.SIGNALIG_SERVER_URL);
+        var ws = $websocket(config.WEBSOCKETURL);
         var collection = [];
 
         ws.onMessage(function(event) {
