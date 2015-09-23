@@ -20,6 +20,7 @@ except AttributeError:
 class TChatApplicationClient(QtWidgets.QMainWindow):
     def __init__(self, parent = None):
         super(TChatApplicationClient, self).__init__(parent)
+        self.DialogWindowCreateRoom = None
         self.LoginTchatObject = parent
         self.CameraConfigObject = CameraConfig()
         self.AudioInputConfig = AudioInputConfig()
@@ -32,7 +33,6 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.createAudioOutputList()
         self.SetDataList()
         self.createTabWidgetRoom()
-        self.GetCameraForShow()
         self.setSignalCommunicationServer()
 
     def createWindow(self):
@@ -45,10 +45,14 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.MenuBar = QtWidgets.QMenuBar(self)
         self.MenuBar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.CloseApp = QtWidgets.QAction("&Create Channel", self)
+        self.CloseApp.triggered.connect(self.onTriggerCreateRoom)
         self.MenuBar.addAction(self.CloseApp)
-        self.ChangeNickName = QtWidgets.QAction("&Change Nickname", self)
-        self.MenuBar.addAction(self.ChangeNickName)
         self.setMenuBar(self.MenuBar)
+
+    def onTriggerCreateRoom(self):
+        nameNewRoom, Ok = QtWidgets.QInputDialog.getText(self, "creation of room", "Room")
+        if Ok == True and nameNewRoom != "":
+            self.LoginTchatObject.WSServer.sendCreationOfRoom(nameNewRoom)
 
     def createListRoom(self):
         self.ListRoomLabel = QtWidgets.QLabel("List Room", self.CentralWidget)
@@ -81,28 +85,28 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.ComboBoxAudioInput.addItems(self.AudioInputConfig.GetAudioInputListName())
         self.ComboBoxAudioOutput.addItems(self.AudioOutputConfig.GetAudioOutputListName())
 
-    def GetCameraForShow(self):
-        self.CameraCurrentActive = QtMultimedia.QCamera(self.CameraConfigObject.GetCurrentCamera())
-        self.CameraViewWidget = QtMultimediaWidgets.QVideoWidget(self.DefaultWidgetsRoom)
-        self.CameraViewWidget.setGeometry(QtCore.QRect(40, 190, 331, 201))
-        self.CameraCurrentActive.setViewfinder(self.CameraViewWidget)
-        self.CameraCurrentActive.start()
-
     def createTabWidgetRoom(self):
         self.TabWidgetRoom = QtWidgets.QTabWidget(self.CentralWidget)
         self.TabWidgetRoom.setGeometry(QtCore.QRect(0, 150, 589, 450))
-        self.DefaultWidgetsRoom = QtWidgets.QWidget(self.TabWidgetRoom)
-        #self.TabWidgetRoom.addTab(self.DefaultWidgetsRoom, "Room 1")
-        #self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), "Room 2")
-        #self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), "Room 3")
 
 
     def setSignalCommunicationServer(self):
         self.LoginTchatObject.WSServer.OnGetAllRoom.connect(self.onUpdateListRooms)
         self.LoginTchatObject.WSServer.sendRequestRooms()
+        self.LoginTchatObject.WSServer.OnCreationRoomSuccess.connect(self.OnUpdateCreationOfRoomwithSuccess)
+        self.LoginTchatObject.WSServer.OnJoinRoomSuccess.connect(self.onJoinRoomSuccessViewUpdate)
 
     def onUpdateListRooms(self, listRoom):
+        self.ListRoom.clear()
         self.ListRoom.addItems(listRoom)
 
     def onClickDBLItemListRoom(self, itemClicked):
         roomSelected = itemClicked.text()
+        self.LoginTchatObject.WSServer.sendRequestJoinRoom(roomSelected)
+
+    def OnUpdateCreationOfRoomwithSuccess(self):
+        self.LoginTchatObject.WSServer.sendRequestRooms()
+
+    def onJoinRoomSuccessViewUpdate(self, NameOfRoom):
+        self.TabWidgetRoom.addTab(QtWidgets.QWidget(self.TabWidgetRoom), NameOfRoom)
+
