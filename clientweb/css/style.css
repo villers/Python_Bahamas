@@ -92,7 +92,7 @@ h3 {
 	background:rgba(0,0,0,0.8);
 	border-radius:5px;
 	margin:auto;
-	margin-top:6%!important;
+	margin-top:100px!important;
 }
 
 #chat #users{
@@ -102,6 +102,23 @@ h3 {
 	height:100%;
 	background:rgba(0,0,0,0.4);
 	border-radius:0px 5px 5px 0px;
+}
+
+@media screen and (max-width: 1400px) {
+  #chat #users {
+    width:15%;
+  }
+}
+
+#chat #users ul{
+	text-align:center;
+	padding:10px;
+	border-bottom:1px solid silver;
+}
+
+#chat #users li{
+	color:white;
+	list-style:none;
 }
 
 #chat #message{
@@ -116,6 +133,18 @@ h3 {
 	text-align:center;
 }
 
+@media screen and (max-width: 1400px) {
+  #chat #message {
+	width:70%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #chat #message {
+	width:70%;
+  }
+}
+
 #chat #send{
 	position:absolute;
 	bottom:0;
@@ -127,6 +156,30 @@ h3 {
 	height:5%;
 	border:none;
 	outline-width:0;
+}
+
+@media screen and (max-width: 1400px) {
+  #chat #send {
+	right:15%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #chat #send {
+	width:20%;
+  }
+}
+
+/* LISTROOM */
+
+.row .glyphicon-refresh{
+	transition:1.5s;
+}
+
+.row .glyphicon-refresh:hover{
+	transition:1.5s;
+	transform:rotate(540deg);
+	color:gold; 
 }
 
 /* NAVBAR */
