@@ -6,7 +6,6 @@
 angular.module('myApp')
     .factory('Server', function($websocket, $rootScope, config) {
         var ws = $websocket(config.WEBSOCKETURL);
-        var collection = [];
 
         ws.onMessage(function(event) {
             console.log('message: ', event);
@@ -34,7 +33,6 @@ angular.module('myApp')
                     console.log('Bad Request', data);
                     break;
             }
-            collection.push(JSON.parse(event.data));
         });
 
         ws.onError(function(event) {
@@ -50,7 +48,6 @@ angular.module('myApp')
         });
 
         return {
-            collection: collection,
             status: function() {
                 return ws.readyState;
             },
