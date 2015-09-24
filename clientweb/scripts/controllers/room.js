@@ -10,6 +10,15 @@ angular.module('myApp')
         $scope.messages = [];
         $scope.listUsers = [];
         $scope.mute = false;
+        $scope.upload = {
+            upload: false,
+            download: false,
+            bytesReceived: '',
+            size: '',
+            name: '',
+            purcent: '',
+            filelist: []
+        };
 
         // Rejoins la room
         $scope.$on('joinRoom', function(events, args){
@@ -103,6 +112,40 @@ angular.module('myApp')
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
+        });
+
+        webrtc.on('createdPeer', function (peer) {
+            peer.on('fileTransfer', function (metadata, receiver) {
+                console.log('incoming filetransfer', metadata.name, metadata);
+                receiver.on('progress', function (bytesReceived) {
+                    $scope.upload.download = true;
+                    $scope.upload.bytesReceived = bytesReceived;
+                    $scope.upload.size = metadata.size;
+                    $scope.upload.name = metadata.name;
+                    $scope.upload.purcent = parseInt((bytesReceived * 100) / metadata.size);
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
+                    console.log('receive progress', bytesReceived, 'out of', metadata.size);
+                });
+                receiver.on('receivedFile', function (file, metadata) {
+                    console.log('received file', metadata.name, metadata.size);
+                    $scope.upload.filelist.push({
+                        url: URL.createObjectURL(file),
+                        name: metadata.name
+                    });
+                    $scope.upload.download = false;
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
+                    receiver.channel.close();
+                });
+            });
+
+            $("#file").change(function(){
+                var file = this.files[0];
+                var sender = peer.sendFile(file);
+            });
         });
 
         webrtc.connection.on('message', showMessage);

@@ -57,3 +57,16 @@
         <input id="send" type="submit" value="Valider"/>
     </form>
 </div>
+
+<div class="progress" ng-if="upload.download">
+  <div class="progress-bar" role="progressbar" aria-valuenow="{{upload.bytesReceived}}" aria-valuemin="0" aria-valuemax="{{upload.size}}" style="min-width: 2em; width: {{upload.purcent}}%;">
+    {{upload.purcent}}%
+  </div>
+</div>
+<p ng-if="upload.download" class="text-info">receive progress {{upload.bytesReceived}}, out of {{upload.size}}</p>
+<p ng-repeat="file in upload.filelist track by $index">
+    <a ng-href="{{file.url}}" download="{{file.name}}">{{file.name}}</a>
+</p>
+<form>
+    <input type="file" id="file">
+</form>
