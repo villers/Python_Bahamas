@@ -139,6 +139,7 @@ video{
 	padding:10px;
 	float:left;
 	overflow-y:auto;
+	word-break: break-all;
 }
 
 #chat .container_chat li{
@@ -255,11 +256,11 @@ video{
 
 /* SCROLLAR */
 
-body::-webkit-scrollbar {
+-webkit-scrollbar {
     width:8px;
 }
  
-body::-webkit-scrollbar-thumb {
+:-webkit-scrollbar-thumb {
   	background-color:gray;
 }
 
