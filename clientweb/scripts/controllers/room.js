@@ -8,6 +8,7 @@ angular.module('myApp')
     .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope) {
         $scope.peers = [];
         $scope.messages = [];
+        $scope.listUsers = [];
 
         // Récupération de la liste des rooms
         $scope.$on('listRooms', function(events,args){
@@ -51,14 +52,6 @@ angular.module('myApp')
         // Demande de récupération de la liste des users
         $scope.doListUsers = function(){
             Server.send({ "request": 3, "Message": $routeParams.roomName });
-        };
-
-        $scope.toggleSelect = function(){
-            $scope.selectRoom = (!$scope.selectRoom);
-        };
-
-        $scope.toggleCreate = function(){
-            $scope.createRoom = (!$scope.createRoom);
         };
 
         $scope.quitRoom = function quitRoom() {
@@ -125,6 +118,14 @@ angular.module('myApp')
                 id: video.attr('id'),
                 nick: peer.nick
             };
+
+            if (peer.nick != $scope.listUsers.Clients[{'login', x}]) {
+                $scope.listUsers.Clients.push({
+                    "Ip": video.attr('id'),
+                    "Login": peer.nick
+                });
+            }
+
             $scope.peers.push(item);
             if(!$scope.$$phase) {
                 $scope.$apply();
