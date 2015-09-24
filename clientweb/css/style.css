@@ -5,11 +5,11 @@ body{
 }
 
 h3 {
-	color: #FFFFFF;
+	color:#FFFFFF;
 }
 
 .container {
-	margin-top: 100px;
+	margin-top:100px;
 }
 
 /* LOGIN */
@@ -23,9 +23,7 @@ h3 {
 	margin-top:10%!important;
 	border-radius:10px;
 	padding:10px;
-	box-shadow:
-		10px 12px 12px rgba(0,0,0,0.3),
-		inset 8px 10px 10px rgba(255,255,255,0.45);
+	box-shadow:10px 12px 12px rgba(0,0,0,0.3), inset 8px 10px 10px rgba(255,255,255,0.45);
 	background:rgba(255,255,255,0.3);
 }
 
@@ -65,9 +63,7 @@ h3 {
 	height:40px;
 	margin:auto;
 	outline-width:0;
-	box-shadow:
-		5px 7px 7px rgba(0,0,0,0.3),
-		inset 4px 6px 6px rgba(255,255,255,0.45);
+	box-shadow:5px 7px 7px rgba(0,0,0,0.3), inset 4px 6px 6px rgba(255,255,255,0.45);
 }
 
 #login input[type="submit"]:hover{
@@ -97,6 +93,15 @@ h3 {
 	height:auto;
 	border-radius:5px 5px 0px 0px;
 	border-bottom:1px solid silver;
+}
+
+.chat_audio #localVideo{
+	width:6%;
+	position:absolute;
+	right:1%;
+	bottom:2%;
+	height:auto;
+	box-shadow:-3px -3px 3px;
 }
 
 .chat_audio .visibleFalse{
@@ -151,9 +156,9 @@ video{
 }
 
 @media screen and (max-width: 1400px) {
-  #chat #users {
-    width:15%;
-  }
+  	#chat #users {
+    	width:15%;
+  	}
 }
 
 #chat #users ul{
@@ -179,15 +184,15 @@ video{
 }
 
 @media screen and (max-width: 1400px) {
-  #chat #message {
-	width:70%;
-  }
+  	#chat #message {
+		width:70%;
+  	}
 }
 
 @media screen and (max-width: 700px) {
-  #chat #message {
-	width:70%;
-  }
+	#chat #message {
+		width:70%;
+	}
 }
 
 #chat #send{
@@ -204,15 +209,15 @@ video{
 }
 
 @media screen and (max-width: 1400px) {
-  #chat #send {
-	right:15%;
-  }
+	#chat #send {
+		right:15%;
+	}
 }
 
 @media screen and (max-width: 700px) {
-  #chat #send {
-	width:20%;
-  }
+	#chat #send {
+		width:20%;
+	}
 }
 
 /* LISTROOM */
@@ -237,21 +242,24 @@ video{
 /* PLACEHOLDER */
 
 ::-webkit-input-placeholder {
-   color: black;
+   	color:black;
 }
 
 ::-moz-placeholder {
-   color: black;  
+   	color:black;  
 }
 
 :-ms-input-placeholder {  
-   color: black;  
+   	color:black;  
 }
 
+/* SCROLLAR */
+
 body::-webkit-scrollbar {
-    width: 8px;
+    width:8px;
 }
  
 body::-webkit-scrollbar-thumb {
-  background-color: gray;
+  	background-color:gray;
 }
+
