@@ -28,7 +28,8 @@ angular
       });
   })
   .constant('config', {
-      WEBSOCKETURL: 'ws://localhost:3334'
+      WEBSOCKETURL: 'ws://localhost:3334',
+      HASH: 'FDSl4sCSdSF+f4'
   })
   .run(function($rootScope, $location){
       if (!$rootScope.login) {

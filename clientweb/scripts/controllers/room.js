@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope) {
+    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope, config) {
         // gestion du scope
         $scope.peers = [];
         $scope.messages = [];
@@ -73,7 +73,7 @@ angular.module('myApp')
 
         webrtc.on('readyToCall', function () {
             if ($scope.selectRoomName) {
-                webrtc.joinRoom($scope.selectRoomName);
+                webrtc.joinRoom(config.HASH + $scope.selectRoomName + config.HASH);
             }
         });
 
