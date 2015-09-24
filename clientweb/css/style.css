@@ -121,7 +121,7 @@ video{
 #chat{
 	position:relative;
 	width:90%;
-	height:200px;
+	height:400px;
 	background:rgba(0,0,0,0.8);
 	border-radius:0px 0px 5px 5px;
 	margin:auto;
@@ -175,7 +175,7 @@ video{
 	height:12%;
 	float:left;
 	outline-width:0;
-	text-align:center;
+	padding-left:10px;
 }
 
 @media screen and (max-width: 1400px) {

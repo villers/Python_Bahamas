@@ -80,11 +80,13 @@ angular.module('myApp')
 
 
         $scope.sendMessage = function() {
-            webrtc.sendToAll('chat', {
-                message: $scope.message,
-                nick: webrtc.config.nick
-            });
-            $scope.message = '';
+            if($scope.message != ""){
+                webrtc.sendToAll('chat', {
+                    message: $scope.message,
+                    nick: webrtc.config.nick
+                });
+                $scope.message = '';
+            }
         };
 
         $scope.refreshList();
