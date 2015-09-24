@@ -9,6 +9,7 @@ angular.module('myApp')
         $scope.peers = [];
         $scope.messages = [];
         $scope.listUsers = [];
+        $scope.mute = false;
 
         // Rejoins la room
         $scope.$on('joinRoom', function(events, args){
@@ -29,11 +30,11 @@ angular.module('myApp')
         };
 
         $scope.ctrlCamera = function(event) {
-            if($(event.target).hasClass("visibleTrue")){
+            if ($(event.target).hasClass("visibleTrue")) {
                 $(event.target).removeClass('visibleTrue');
                 $(event.target).addClass('visibleFalse');
                 $('.visibleTrue').hide();
-            }else if($(event.target).hasClass("visibleFalse")){
+            } else if($(event.target).hasClass("visibleFalse")) {
                 $(event.target).removeClass('visibleFalse');
                 $(event.target).addClass('visibleTrue');
                 $('.visibleTrue').show();
@@ -41,7 +42,7 @@ angular.module('myApp')
         };
 
         $scope.sendMessage = function() {
-            if($scope.message != ""){
+            if ($scope.message != "") {
                 webrtc.sendToAll('chat', {
                     message: $scope.message,
                     nick: webrtc.config.nick
@@ -86,7 +87,7 @@ angular.module('myApp')
                 id: video.attr('id'),
                 nick: peer.nick
             });
-            if(!$scope.$$phase) {
+            if (!$scope.$$phase) {
                 $scope.$apply();
             }
         });
@@ -99,7 +100,7 @@ angular.module('myApp')
             $scope.peers = $scope.peers.filter(function(item) {
                 return item.nick != peer.nick;
             });
-            if(!$scope.$$phase) {
+            if (!$scope.$$phase) {
                 $scope.$apply();
             }
         });
@@ -110,9 +111,15 @@ angular.module('myApp')
         function showMessage(data) {
             if(data.type === 'chat'){
                 $scope.messages.push(data.payload.nick + ': ' + data.payload.message);
-                if(!$scope.$$phase) {
+                if (!$scope.$$phase) {
                     $scope.$apply();
                 }
+
+                if (!$scope.mute) {
+                    var audio = new Audio('song/bip.mp3');
+                    audio.play();
+                }
+
                 var element = $('.container_chat');
                 element.animate({'scrollTop': element[0].scrollHeight}, 'fast');
             }

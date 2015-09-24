@@ -14,6 +14,13 @@
                     <a href="#/room" ng-click="quitRoom()">Changer de room</a>
                 </li>
             </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li>
+                    <a href="">
+                        <i class="glyphicon" ng-class="{'glyphicon-volume-off': mute, 'glyphicon-volume-up': !mute}" ng-click="mute = !mute"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

@@ -235,9 +235,13 @@ video{
 
 /* NAVBAR */
 
-.navbar-collapse a{
-	width:300px;
+.navbar a{
 	text-align:center;
+	color:white!important;
+}
+
+.navbar a:hover{
+	text-decoration:underline!important;
 }
 
 /* PLACEHOLDER */
@@ -263,4 +267,3 @@ video{
 :-webkit-scrollbar-thumb {
   	background-color:gray;
 }
-
