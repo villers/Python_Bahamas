@@ -127,6 +127,13 @@ video{
 	margin-bottom:50px!important;
 }
 
+.container_chat{
+	width:90%!important;
+	height:90%!important;
+	padding:10px;
+	float:left;
+}
+
 #chat #users{
 	position:absolute;
 	right:0;
