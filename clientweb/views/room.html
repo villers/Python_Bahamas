@@ -34,7 +34,9 @@
 <div class="chat_audio">
     <div class="video-wrapper" ng-init="item = []">
 
-        <video ng-repeat="peer in peers" ng-src="{{peer.src}}" class="visibleTrue" id="{{peer.id}}" ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="ctrlCamera($event)" ng-src="{{stream}}" autoplay></video>
+        <div class="test">
+            <video ng-repeat="peer in peers" ng-src="{{peer.src}}" class="visibleTrue" id="{{peer.id}}" ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="ctrlCamera($event)" ng-src="{{stream}}" autoplay></video>
+        </div>
 
         <video id="localVideo" style="width:6%;position:absolute;right:1%;bottom:2%;height:auto;box-shadow:-3px -3px 3px;" autoplay muted></video>
     </div>
@@ -44,12 +46,16 @@
 <!-- TEXT -->
 <div id="chat">
 
+    <div class="container_chat">
+        ok
+    </div>
+
 	<div id="users">
 		<ul>
 			<li ng-repeat="users in listUsers.Clients">{{users.Login}}</li>
 		</ul>
 	</div>
-
+    
     <input type="text" id="message" ng-model="message"/>
     <button id="send" ng-click="sendMessage()">Valider</button>
     <button ng-click="stop()"></button>
