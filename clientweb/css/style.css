@@ -38,11 +38,12 @@ h3 {
 	margin:auto;
 	width:80%;
 	height:60px;
-	border:2px inset black;
+	border:1px inset gray;
 	border-radius:30px;
 	color:black;
 	padding:5px;
 	outline-width:0;
+	box-shadow: 3px 3px 3px black;
 }
 
 #login input[type="text"]:hover{
@@ -99,7 +100,7 @@ h3 {
 }
 
 .chat_audio .visibleFalse{
-	width:80%;
+	width:70%;
 	margin:auto;
 	display:block;
 }

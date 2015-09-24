@@ -76,10 +76,6 @@ angular.module('myApp')
             }
         };
 
-        $scope.closeCamera = function(event) {
-            console.log($(event.target).css('display','none'));
-        };
-
         $scope.refreshList();
         $scope.doJoinRoom();
 
