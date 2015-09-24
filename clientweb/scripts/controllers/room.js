@@ -4,32 +4,21 @@
 'use strict';
 
 angular.module('myApp')
-
     .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope) {
+        // gestion du scope
         $scope.peers = [];
         $scope.messages = [];
         $scope.listUsers = [];
 
-        // Récupération de la liste des users
-        $scope.$on('listUsers', function(events,args){
-            $scope.listUsers = args.Message;
-            console.log(args.Message);
-        });
-
         // Rejoins la room
-        $scope.$on('joinRoom', function(events,args){
-            $scope.doListUsers();
+        $scope.$on('joinRoom', function(events, args){
+            console.log('connected')
         });
 
         // Demande à rejoindre une room
         $scope.doJoinRoom = function(){
             $scope.selectRoomName = $routeParams.roomName;
             Server.send({ "request": 5, "Message": $routeParams.roomName });
-        };
-
-        // Demande de récupération de la liste des users
-        $scope.doListUsers = function(){
-            Server.send({ "request": 3, "Message": $routeParams.roomName });
         };
 
         $scope.quitRoom = function quitRoom() {
@@ -40,7 +29,6 @@ angular.module('myApp')
         };
 
         $scope.ctrlCamera = function(event) {
-
             if($(event.target).hasClass("visibleTrue")){
                 $(event.target).removeClass('visibleTrue');
                 $(event.target).addClass('visibleFalse');
@@ -71,6 +59,7 @@ angular.module('myApp')
 
         $scope.doJoinRoom();
 
+        // gestion du webrtc
         var webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: '',
@@ -91,18 +80,12 @@ angular.module('myApp')
         webrtc.on('videoAdded', function (video, peer) {
             console.log('video added', peer);
             video = $(video);
-            var item = {
+            $scope.listUsers.push(peer.nick);
+            $scope.peers.push({
                 src: $sce.trustAsResourceUrl(video.attr('src')),
                 id: video.attr('id'),
                 nick: peer.nick
-            };
-
-            $scope.listUsers.Clients.push({
-                "Ip": video.attr('id'),
-                "Login": peer.nick
             });
-
-            $scope.peers.push(item);
             if(!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -110,8 +93,10 @@ angular.module('myApp')
 
         webrtc.on('videoRemoved', function (video, peer) {
             console.log('video removed ', video, peer);
+            $scope.listUsers = $scope.listUsers.filter(function(item) {
+                return item != peer.nick;
+            });
             $scope.peers = $scope.peers.filter(function(item) {
-                console.log(item.nick, peer.nick);
                 return item.nick != peer.nick;
             });
             if(!$scope.$$phase) {
@@ -121,14 +106,15 @@ angular.module('myApp')
 
         webrtc.connection.on('message', showMessage);
 
+        // helper
         function showMessage(data) {
             if(data.type === 'chat'){
-                console.log(data.payload.nick + ':' + data.payload.message);
                 $scope.messages.push(data.payload.nick + ': ' + data.payload.message);
                 if(!$scope.$$phase) {
                     $scope.$apply();
                 }
-                $('.container_chat').animate({'scrollTop': $('.container_chat')[0].scrollHeight}, 'fast');
+                var element = $('.container_chat');
+                element.animate({'scrollTop': element[0].scrollHeight}, 'fast');
             }
         }
     });

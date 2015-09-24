@@ -40,7 +40,8 @@
 
 	<div id="users">
 		<ul>
-			<li ng-repeat="users in listUsers.Clients track by $index">{{users.Login}}</li>
+            <li>{{$root.login}}</li>
+			<li ng-repeat="user in listUsers track by $index">{{user}}</li>
 		</ul>
 	</div>
 
