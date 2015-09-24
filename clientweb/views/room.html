@@ -33,12 +33,12 @@
 <!-- VIDEO -->
 <div class="chat_audio">
     <div class="video-wrapper" ng-init="item = []">
-
+        <div class="test">
+            <video ng-repeat="peer in peers track by $index" ng-src="{{peer.src}}" class="visibleTrue" id="{{peer.id}}" ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="ctrlCamera($event)" ng-src="{{stream}}" autoplay></video>
         </div>
 
         <video id="localVideo" style="width:6%;position:absolute;right:1%;bottom:2%;height:auto;box-shadow:-3px -3px 3px;" autoplay muted></video>
     </div>
-
 </div>
 
 <!-- TEXT -->
@@ -46,13 +46,13 @@
 
     <div class="container_chat">
         <ul>
-            <li ng-repeat="text in messages">{{text}}</li>
+            <li ng-repeat="text in messages track by $index">{{text}}</li>
         </ul>
     </div>
 
 	<div id="users">
 		<ul>
-			<li ng-repeat="users in listUsers.Clients">{{users.Login}}</li>
+			<li ng-repeat="users in listUsers.Clients track by $index">{{users.Login}}</li>
 		</ul>
 	</div>
 

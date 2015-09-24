@@ -146,6 +146,7 @@ angular.module('myApp')
                 if(!$scope.$$phase) {
                     $scope.$apply();
                 }
+                $('.container_chat').animate({'scrollTop': $('.container_chat')[0].scrollHeight}, 'fast');
             }
         }
     });

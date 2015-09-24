@@ -36,7 +36,7 @@
     <div class="row">
         <h3 class="col-md-12">Liste des rooms <a href="" ng-click="refreshList()"><i class="glyphicon glyphicon-refresh"></i></a></h3>
         <ul class="thumbnails list-unstyled">
-            <li class="col-md-3" ng-repeat="room in listRooms">
+            <li class="col-md-3" ng-repeat="room in listRooms track by $index">
                 <div class="thumbnail" style="padding: 0">
                     <div class="caption">
                         <h2>{{room}}</h2>

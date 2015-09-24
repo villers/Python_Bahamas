@@ -128,11 +128,17 @@ video{
 	margin-bottom:50px!important;
 }
 
-.container_chat{
+#chat .container_chat{
 	width:90%!important;
 	height:90%!important;
 	padding:10px;
 	float:left;
+	overflow-y:auto;
+}
+
+#chat .container_chat li{
+	color:white;
+	list-style:none;
 }
 
 #chat #users{
@@ -258,4 +264,12 @@ video{
 
 :-ms-input-placeholder {  
    color: black;  
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: gray;
 }
