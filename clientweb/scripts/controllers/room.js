@@ -10,38 +10,16 @@ angular.module('myApp')
         $scope.messages = [];
         $scope.listUsers = [];
 
-        // Récupération de la liste des rooms
-        $scope.$on('listRooms', function(events,args){
-            $scope.listRooms = args.Message;
-        });
-
         // Récupération de la liste des users
         $scope.$on('listUsers', function(events,args){
             $scope.listUsers = args.Message;
             console.log(args.Message);
         });
 
-        // Création d'une nouvelle room
-        $scope.$on('createRoom', function(events,args){
-            if (args.Status === 200) {
-                $location.path('room/'+$scope.createRoomName);
-            }
-        });
-
         // Rejoins la room
         $scope.$on('joinRoom', function(events,args){
             $scope.doListUsers();
         });
-
-        // Demande la liste des rooms
-        $scope.refreshList = function() {
-            Server.send({ "request": 1, "Message": ""});
-        };
-
-        // Demande de création d'une nouvelle room
-        $scope.doCreateRoom = function(){
-            Server.send({ "request": 2, "Message": $scope.createRoomName });
-        };
 
         // Demande à rejoindre une room
         $scope.doJoinRoom = function(){
@@ -61,11 +39,6 @@ angular.module('myApp')
             Server.send({ "request": 4, "Message": $routeParams.roomName });
         };
 
-        $scope.changeRoom = function() {
-            $scope.quitRoom();
-            $location.path('room/'+$scope.selectRoomName);
-        };
-
         $scope.ctrlCamera = function(event) {
 
             if($(event.target).hasClass("visibleTrue")){
@@ -79,7 +52,6 @@ angular.module('myApp')
             }
         };
 
-
         $scope.sendMessage = function() {
             if($scope.message != ""){
                 webrtc.sendToAll('chat', {
@@ -90,7 +62,6 @@ angular.module('myApp')
             }
         };
 
-        $scope.refreshList();
         $scope.doJoinRoom();
 
         var webrtc = new SimpleWebRTC({

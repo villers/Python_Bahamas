@@ -234,24 +234,6 @@ video{
 	text-align:center;
 }
 
-.navbar-collapse .inputSelect{
-	width:300px;
-	text-align:center;
-	padding-top:8px;
-}
-
-.navbar-collapse .inputSelect select{
-	width:70%;
-	display:block;
-	margin:auto;
-}
-
-.navbar-collapse .inputSelect input{
-	width:70%;
-	display:block;
-	margin:auto;
-}
-
 /* PLACEHOLDER */
 
 ::-webkit-input-placeholder {
