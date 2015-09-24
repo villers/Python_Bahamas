@@ -11,21 +11,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#/room" ng-click="quitRoom()">Accueil</a>
-                </li>
-                <li>
-                    <a ng-if="!selectRoom" ng-click="toggleSelect()">Choisir une nouvelle room</a>
-                    <form class="inputSelect" ng-show="selectRoom">
-	                    <select class="form-control" ng-model="selectRoomName" ng-change="changeRoom()">
-							<option ng-repeat="optionsSelect in listRooms track by $index">{{optionsSelect}}</option>
-						</select>
-					</form>
-                </li>
-                <li>
-                    <a ng-if="!createRoom" ng-click="toggleCreate()">Créer une room</a>
-                    <form class="inputSelect" ng-show="createRoom" ng-submit="doCreateRoom()">
-	                    <input class="form-control" ng-model="createRoomName" type="text"/>
-                    </form>
+                    <a href="#/room" ng-click="quitRoom()">Changer de room</a>
                 </li>
             </ul>
         </div>
