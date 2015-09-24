@@ -78,15 +78,6 @@ class Client():
             print(str(Message) + " does not exist")
             self.WebSocketClient.sendTextMessage(MessageModel(404, "Does not exist", 3).to_JSON())
 
-    def OnMessage(self, Message):
-        if self.ServerObject.TChatManagementInstance.CheckRoomExists(Message):
-            print();
-
-        else:
-            print(str(Message) + " does not exist")
-            self.WebSocketClient.sendTextMessage(MessageModel(404, "Does not exist", 3).to_JSON())
-
-
     def SwitchRequestMethod(self, x):
         return {
             0: self.OnLogin,
@@ -94,6 +85,5 @@ class Client():
             2: self.OnCreateRoom,
             3: self.OnListClientRoom,
             4: self.OnLeaveRoom,
-            5: self.OnJoinRoom,
-            6: self.OnMessage
+            5: self.OnJoinRoom
         }[x]

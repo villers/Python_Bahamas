@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#/room">Accueil</a>
+                    <a href="#/room" ng-click="quitRoom()">Accueil</a>
                 </li>
                 <li>
                     <a ng-if="!selectRoom" ng-click="toggleSelect()">Choisir une nouvelle room</a>
@@ -31,7 +31,6 @@
         </div>
     </div>
 </nav>
-
 
 <!-- VIDEO -->
 <div class="chat_audio">

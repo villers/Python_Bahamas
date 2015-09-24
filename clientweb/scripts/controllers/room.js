@@ -61,7 +61,15 @@ angular.module('myApp')
             $scope.createRoom = (!$scope.createRoom);
         };
 
+        $scope.quitRoom = function quitRoom() {
+            webrtc.stopLocalVideo();
+            webrtc.leaveRoom();
+            webrtc.disconnect();
+            Server.send({ "request": 4, "Message": $routeParams.roomName });
+        };
+
         $scope.changeRoom = function() {
+            $scope.quitRoom();
             $location.path('room/'+$scope.selectRoomName);
         };
 
@@ -118,7 +126,9 @@ angular.module('myApp')
                 nick: peer.nick
             };
             $scope.peers.push(item);
-            $scope.$apply();
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
         });
 
         webrtc.on('videoRemoved', function (video, peer) {
@@ -127,16 +137,10 @@ angular.module('myApp')
                 console.log(item.nick, peer.nick);
                 return item.nick != peer.nick;
             });
-            $scope.$apply();
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
         });
-
-        $scope.stop = function() {
-            console.log(webrtc);
-            //webrtc.stopLocalVideo();
-            //webrtc.leaveRoom();
-            //webrtc.disconnect();
-            //webrtc.sendToAll('chat', {message: 'Salut message de test', nick: webrtc.config.nick});
-        };
 
         webrtc.connection.on('message', showMessage);
         webrtc.on('message', showMessage);
