@@ -119,12 +119,10 @@ angular.module('myApp')
                 nick: peer.nick
             };
 
-            if (peer.nick != $scope.listUsers.Clients[{'login', x}]) {
-                $scope.listUsers.Clients.push({
-                    "Ip": video.attr('id'),
-                    "Login": peer.nick
-                });
-            }
+            $scope.listUsers.Clients.push({
+                "Ip": video.attr('id'),
+                "Login": peer.nick
+            });
 
             $scope.peers.push(item);
             if(!$scope.$$phase) {
