@@ -93,6 +93,13 @@ angular.module('myApp')
                     message: $scope.message,
                     nick: webrtc.config.nick
                 });
+                showMessage({
+                    type: 'chat',
+                    payload: {
+                        nick: $rootScope.login,
+                        message: $scope.message
+                    }
+                });
                 $scope.message = '';
             }
         };
@@ -143,7 +150,6 @@ angular.module('myApp')
         });
 
         webrtc.connection.on('message', showMessage);
-        webrtc.on('message', showMessage);
 
         function showMessage(data) {
             if(data.type === 'chat'){
