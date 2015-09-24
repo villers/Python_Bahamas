@@ -6,6 +6,7 @@
 angular.module('myApp')
     .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope) {
         $scope.peers = [];
+        $scope.messages = [];
 
         // Récupération de la liste des rooms
         $scope.$on('listRooms', function(events,args){
@@ -84,6 +85,7 @@ angular.module('myApp')
                 message: $scope.message,
                 nick: webrtc.config.nick
             });
+            $scope.message = '';
         };
 
         $scope.refreshList();
@@ -135,17 +137,16 @@ angular.module('myApp')
             //webrtc.sendToAll('chat', {message: 'Salut message de test', nick: webrtc.config.nick});
         };
 
-        webrtc.connection.on('message', function(data){
-            if(data.type === 'chat'){
-                console.log('chat received',data);
-                console.log(data.payload.nick + ':' + data.payload.message);
-            }
-        });
+        webrtc.connection.on('message', showMessage);
+        webrtc.on('message', showMessage);
 
-        webrtc.on('message', function(data){
+        function showMessage(data) {
             if(data.type === 'chat'){
-                console.log('chat received',data);
                 console.log(data.payload.nick + ':' + data.payload.message);
+                $scope.messages.push(data.payload.nick + ': ' + data.payload.message);
+                if(!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }
-        });
+        }
     });

@@ -47,7 +47,9 @@
 <div id="chat">
 
     <div class="container_chat">
-        ok
+        <ul>
+            <li ng-repeat="text in messages">{{text}}</li>
+        </ul>
     </div>
 
 	<div id="users">
@@ -55,8 +57,9 @@
 			<li ng-repeat="users in listUsers.Clients">{{users.Login}}</li>
 		</ul>
 	</div>
-    
-    <input type="text" id="message" ng-model="message"/>
-    <button id="send" ng-click="sendMessage()">Valider</button>
-    <button ng-click="stop()"></button>
+
+    <form ng-submit="sendMessage()">
+        <input type="text" id="message" ng-model="message"/>
+        <input id="send" type="submit" value="Valider"/>
+    </form>
 </div>
