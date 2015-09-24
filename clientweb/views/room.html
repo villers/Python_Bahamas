@@ -50,6 +50,7 @@
 		</ul>
 	</div>
 
-    <input type="text" id="message"/>
-    <button id="send">Valider</button>
+    <input type="text" id="message" ng-model="message"/>
+    <button id="send" ng-click="sendMessage()">Valider</button>
+    <button ng-click="stop()"></button>
 </div>

@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce) {
+    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope) {
         $scope.peers = [];
 
         // Récupération de la liste des rooms
@@ -64,7 +64,6 @@ angular.module('myApp')
         };
 
         $scope.ctrlCamera = function(event) {
-            //console.log($(event.target).css('width','75%'));
             if($(event.target).hasClass("visibleTrue")){
                 $(event.target).removeClass('visibleTrue');
                 $(event.target).addClass('visibleFalse');
@@ -77,17 +76,18 @@ angular.module('myApp')
         };
 
         $scope.closeCamera = function(event) {
-            console.log($(event.target).css('display','none'));
+            $(event.target).css('display','none');
+        };
+
+        $scope.sendMessage = function() {
+            webrtc.sendToAll('chat', {
+                message: $scope.message,
+                nick: webrtc.config.nick
+            });
         };
 
         $scope.refreshList();
         $scope.doJoinRoom();
-
-
-        if (!window.RTCPeerConnection || !navigator.getUserMedia) {
-            alert('WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.');
-            return false;
-        }
 
         var webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
@@ -95,7 +95,9 @@ angular.module('myApp')
             autoRequestMedia: true,
             debug: false,
             detectSpeakingEvents: true,
-            autoAdjustMic: false
+            autoAdjustMic: false,
+            nick: $rootScope.login,
+            socketio: {'force new connection':true}
         });
 
         webrtc.on('readyToCall', function () {
@@ -104,17 +106,46 @@ angular.module('myApp')
             }
         });
 
-        // a peer video has been added
         webrtc.on('videoAdded', function (video, peer) {
             console.log('video added', peer);
-            console.log(video);
             video = $(video);
-
             var item = {
                 src: $sce.trustAsResourceUrl(video.attr('src')),
-                id: video.attr('id')
+                id: video.attr('id'),
+                nick: peer.nick
             };
             $scope.peers.push(item);
             $scope.$apply();
+        });
+
+        webrtc.on('videoRemoved', function (video, peer) {
+            console.log('video removed ', video, peer);
+            $scope.peers = $scope.peers.filter(function(item) {
+                console.log(item.nick, peer.nick);
+                return item.nick != peer.nick;
+            });
+            $scope.$apply();
+        });
+
+        $scope.stop = function() {
+            console.log(webrtc);
+            //webrtc.stopLocalVideo();
+            //webrtc.leaveRoom();
+            //webrtc.disconnect();
+            //webrtc.sendToAll('chat', {message: 'Salut message de test', nick: webrtc.config.nick});
+        };
+
+        webrtc.connection.on('message', function(data){
+            if(data.type === 'chat'){
+                console.log('chat received',data);
+                console.log(data.payload.nick + ':' + data.payload.message);
+            }
+        });
+
+        webrtc.on('message', function(data){
+            if(data.type === 'chat'){
+                console.log('chat received',data);
+                console.log(data.payload.nick + ':' + data.payload.message);
+            }
         });
     });
