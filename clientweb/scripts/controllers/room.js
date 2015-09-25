@@ -116,6 +116,9 @@ angular.module('myApp')
                 }
 
                 if (!$scope.mute) {
+                    webrtc.mute('video');
+                    webrtc.mute('audio');
+                    $('body').prop('muted',true);
                     var audio = new Audio('song/bip.mp3');
                     audio.play();
                 }
@@ -124,4 +127,5 @@ angular.module('myApp')
                 element.animate({'scrollTop': element[0].scrollHeight}, 'fast');
             }
         }
+
     });

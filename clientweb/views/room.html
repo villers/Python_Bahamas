@@ -29,10 +29,10 @@
 <div class="chat_audio">
     <div class="video-wrapper" ng-init="item = []">
         <div class="test">
-            <video ng-repeat="peer in peers track by $index" ng-src="{{peer.src}}" class="visibleTrue" id="{{peer.id}}" ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="ctrlCamera($event)" ng-src="{{stream}}" autoplay></video>
+            <video ng-repeat="peer in peers track by $index" ng-src="{{peer.src}}" class="visibleTrue" id="{{peer.id}}" ng-class="{ctrlCamera: item[$index]}" ng-init="item[$index] = false" ng-click="ctrlCamera($event)" ng-src="{{stream}}" autoplay="true"></video>
         </div>
 
-        <video id="localVideo" autoplay muted></video>
+        <video id="localVideo" autoplay="true" muted="true"></video>
     </div>
 </div>
 
