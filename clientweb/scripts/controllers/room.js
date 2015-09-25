@@ -2,9 +2,9 @@
  * Created by viller_m and sioly_t on 21/09/2015.
  */
 'use strict';
-
+var angular;
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, $sce, $rootScope, config) {
+    .controller('RoomCtrl', function (Server, $scope, $routeParams, $sce, $rootScope, config) {
         // gestion du scope
         $scope.peers = [];
         $scope.messages = [];
@@ -22,7 +22,7 @@ angular.module('myApp')
 
         // Rejoins la room
         $scope.$on('joinRoom', function(events, args){
-            console.log('connected');
+            console.log('connected', events, args);
         });
 
         // Demande à rejoindre une room
@@ -64,6 +64,14 @@ angular.module('myApp')
                     }
                 });
                 $scope.message = '';
+            }
+        };
+
+        $scope.doMute = function() {
+            if ($scope.mute) {
+                webrtc.mute();
+            } else {
+                webrtc.unmute();
             }
         };
 
@@ -145,6 +153,7 @@ angular.module('myApp')
             $("#file").change(function(){
                 var file = this.files[0];
                 var sender = peer.sendFile(file);
+                console.log(sender);
             });
         });
 
@@ -159,9 +168,6 @@ angular.module('myApp')
                 }
 
                 if (!$scope.mute) {
-                    webrtc.mute('video');
-                    webrtc.mute('audio');
-                    $('body').prop('muted',true);
                     var audio = new Audio('song/bip.mp3');
                     audio.play();
                 }

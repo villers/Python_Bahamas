@@ -2,7 +2,7 @@
  * Created by viller_m on 21/09/2015.
  */
 'use strict';
-
+var angular;
 angular
     .module('myApp', [
         'ngRoute',

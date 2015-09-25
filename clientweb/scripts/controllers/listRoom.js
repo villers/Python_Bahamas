@@ -2,7 +2,7 @@
  * Created by viller_m on 22/09/2015.
  */
 'use strict';
-
+var angular;
 angular.module('myApp')
     .controller('ListRoomCtrl', function (Server, $scope) {
         // Demande la liste des rooms
