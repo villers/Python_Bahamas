@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia, QtMultimediaWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia, QtMultimediaWidgets, QtNetwork
 from CameraConfig import *
 from AudioInputConfig import *
 from AudioOutputConfig import *
@@ -35,6 +35,8 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         self.SetDataList()
         self.createTabWidgetRoom()
         self.setSignalCommunicationServer()
+        self.SetupConnexionUDP()
+        self.showLocalhostCamera()
 
     def createWindow(self):
         self.setWindowTitle("Bahamas Tchat")
@@ -114,13 +116,31 @@ class TChatApplicationClient(QtWidgets.QMainWindow):
         ListWidget = QtWidgets.QListWidget(newWidgetTab)
         ListWidget.setGeometry(QtCore.QRect(190, 130, 191, 241))
         self.QWidgetRoomList.append({"Room": NameOfRoom, "Widget": newWidgetTab, "ListWidget": ListWidget})
+        print(NameOfRoom)
         self.TabWidgetRoom.addTab(newWidgetTab, NameOfRoom)
         self.LoginTchatObject.WSServer.sendRequestListInRoom(NameOfRoom)
 
     def OnUpdateListClientInRoom(self, JSONListClient):
+        print(JSONListClient.Room)
         for item in self.QWidgetRoomList:
             if item["Room"] == JSONListClient.Room:
                 for itemClient in JSONListClient.Clients:
                     item["ListWidget"].addItem(itemClient.Login)
-            break
+                break
+
+    def SetupConnexionUDP(self):
+        self.UdpServer = QtNetwork.QUdpSocket(self)
+        self.UdpServer.bind(QtNetwork.QHostAddress.LocalHost, 7756)
+        self.UdpServer.readyRead.connect(self.onReadDatagrams)
+
+    def onReadDatagrams(self):
+        while self.UdpServer.hasPendingDatagrams():
+            string, host, port = self.UdpServer.readDatagram(self.UdpServer.pendingDatagramSize())
+
+    def showLocalhostCamera(self):
+        self.CameraCurrentActive = QtMultimedia.QCamera(self.CameraConfigObject.GetCurrentCamera())
+        self.CameraViewWidget = QtMultimediaWidgets.QVideoWidget(self.CentralWidget)
+        self.CameraViewWidget.setGeometry(QtCore.QRect(400, 50, 157, 100))
+        self.CameraCurrentActive.setViewfinder(self.CameraViewWidget)
+        self.CameraCurrentActive.start()
 
