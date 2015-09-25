@@ -7,7 +7,8 @@ angular.module('myApp')
     .controller('HomeCtrl', function ($location, $rootScope, $scope, Server) {
 
         // Récupération du login
-        $scope.$on('login', function(events,args){
+        $scope.$on('login', function(events, args){
+            console.log(events);
             if (args.Status === 200) {
                 $location.path('/room');
             } else {
@@ -20,5 +21,5 @@ angular.module('myApp')
         $scope.doConnexion = function(){
             $rootScope.login = $scope.login;
             Server.send({ "request": 0, "Message": $scope.login });
-        }
+        };
     });

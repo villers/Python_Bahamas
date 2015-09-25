@@ -4,24 +4,26 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('ListRoomCtrl', function (Server, $scope, $rootScope) {
+    .controller('ListRoomCtrl', function (Server, $scope) {
         // Demande la liste des rooms
         $scope.refreshList = function() {
             Server.send({ "request": 1, "Message": ""});
         };
 
-        // Récupération de la liste des rooms
+        // RÃ©cupÃ©ration de la liste des rooms
         $scope.$on('listRooms', function(events,args){
+            console.log(events);
             $scope.listRooms = args.Message;
         });
 
-        // Demande de création de la room
+        // Demande de crÃ©ation de la room
         $scope.createRoom = function() {
             Server.send({ "request": 2, "Message": $scope.roomName });
         };
 
-        // Création d'une nouvelle room
+        // CrÃ©ation d'une nouvelle room
         $scope.$on('createRoom', function(events,args){
+            console.log(events, args);
             $scope.refreshList();
             $scope.roomName = "";
             $scope.create = false;

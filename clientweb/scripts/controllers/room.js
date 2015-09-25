@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, VideoStream, $sce, $rootScope, config) {
+    .controller('RoomCtrl', function ($location, Server, $scope, $routeParams, $sce, $rootScope, config) {
         // gestion du scope
         $scope.peers = [];
         $scope.messages = [];
@@ -22,7 +22,7 @@ angular.module('myApp')
 
         // Rejoins la room
         $scope.$on('joinRoom', function(events, args){
-            console.log('connected')
+            console.log('connected');
         });
 
         // Demande à rejoindre une room
@@ -51,7 +51,7 @@ angular.module('myApp')
         };
 
         $scope.sendMessage = function() {
-            if ($scope.message != "") {
+            if ($scope.message !== "") {
                 webrtc.sendToAll('chat', {
                     message: $scope.message,
                     nick: webrtc.config.nick
